@@ -1,29 +1,26 @@
-﻿using Domain.Communication.Planets.Results;
-using Domain.Entities;
-using Domain.Options;
+﻿using Domain.Entities;
 using Grains.Abstractions;
-using Microsoft.Extensions.Options;
+using Infrastructure.Repository.Abstractions;
 using Orleans;
 
 namespace Grains.Implementations
 {
     public class PlanetGrain : Grain, IPlanetGrain
     {
-        private readonly AzureTableOptions tableOptions;
+        private readonly IPlanetRepository planetRepository;
 
-        public PlanetGrain(IOptions<AzureTableOptions> options)
+        public PlanetGrain(IPlanetRepository planetRepository)
         {
-            tableOptions = options.Value;
+            this.planetRepository = planetRepository;
         }
 
-        public Task<GetPlanetsResult> GetAllPlanets()
+        public async Task<List<Planet>> GetAllPlanets() =>
+            await planetRepository.GetAllAsync().ToListAsync();
+
+        public async Task InsertPlanet(Planet planet)
         {
-            return Task.FromResult(
-                new GetPlanetsResult
-                {
-                    IsSuccessed = true,
-                    Planets = Enumerable.Empty<Planet>()
-                });
+            planet.PartitionKey = "Planet";
+            await planetRepository.InsertAsync(planet);
         }
 
         public Task SayHello()

@@ -1,4 +1,4 @@
-﻿using Domain.Communication.Planets.Results;
+﻿using Domain.Entities;
 using Orleans;
 
 namespace Grains.Abstractions
@@ -6,7 +6,7 @@ namespace Grains.Abstractions
     public interface IPlanetGrain : IGrainWithStringKey
     {
         Task SayHello();
-
-        Task<GetPlanetsResult> GetAllPlanets();
+        Task<List<Planet>> GetAllPlanets();
+        Task InsertPlanet(Planet planet);
     }
 }
