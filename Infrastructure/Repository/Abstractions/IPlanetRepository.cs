@@ -5,5 +5,6 @@ namespace Infrastructure.Repository.Abstractions
 {
     public interface IPlanetRepository : IAzureTableRepository<Planet>
     {
+        Task<List<Planet>> GetAllPlanets();
     }
 }
