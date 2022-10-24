@@ -1,5 +1,6 @@
 ﻿using Domain.Options;
 using Grains.Implementations;
+using Infrastructure.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Orleans;
@@ -41,8 +42,22 @@ static async Task<IHost> StartSiloAsync(string[] args)
         siloBuilder.Configure<AzureTableOptions>
             (context.Configuration.GetSection("AzureTable"));
 
+        siloBuilder.AddAzureTableGrainStorage(
+            name: "planetsStates",
+            configureOptions: options =>
+            {
+                options.UseJson = true;
+                options.ConfigureTableServiceClient
+                    (context.Configuration.GetSection("AzureTable")["ConnectionString"]);
+            });
+
         siloBuilder.ConfigureApplicationParts(
             parts => parts.AddApplicationPart(grainsAssembly).WithReferences());
+
+        siloBuilder.ConfigureServices(services =>
+        {
+            services.AddRepositories();
+        });
     });
 
     IHost host = builder.Build();

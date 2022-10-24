@@ -8,6 +8,7 @@ namespace Domain.Entities
     {
         public string Name { get; set; }
         public long Population { get; set; }
+        public int Rating { get; set; }
         DateTimeOffset? ITableEntity.Timestamp { get; set; } = default!;
         ETag ITableEntity.ETag { get; set; }
         public override string ToString() =>
