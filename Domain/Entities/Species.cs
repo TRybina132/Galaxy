@@ -1,6 +1,4 @@
-﻿using Azure;
-using Azure.Data.Tables;
-using ManagedCode.Repository.AzureTable;
+﻿using ManagedCode.Repository.AzureTable;
 
 namespace Domain.Entities
 {

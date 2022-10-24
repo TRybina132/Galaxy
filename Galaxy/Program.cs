@@ -42,6 +42,15 @@ static async Task<IHost> StartSiloAsync(string[] args)
         siloBuilder.Configure<AzureTableOptions>
             (context.Configuration.GetSection("AzureTable"));
 
+        siloBuilder.AddAzureTableGrainStorage(
+            name: "planetsStates",
+            configureOptions: options =>
+            {
+                options.UseJson = true;
+                options.ConfigureTableServiceClient
+                    (context.Configuration.GetSection("AzureTable")["ConnectionString"]);
+            });
+
         siloBuilder.ConfigureApplicationParts(
             parts => parts.AddApplicationPart(grainsAssembly).WithReferences());
 

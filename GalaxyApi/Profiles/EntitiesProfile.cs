@@ -8,7 +8,7 @@ namespace GalaxyApi.Profiles
     {
         public EntitiesProfile()
         {
-            CreateMap<Planet, PlanetViewModel>();
+            CreateMap<Planet, PlanetViewModel>().ReverseMap();
             CreateMap<PlanetCreateViewModel, Planet>();
         }
     }

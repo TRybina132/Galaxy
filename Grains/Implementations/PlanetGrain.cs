@@ -27,8 +27,11 @@ namespace Grains.Implementations
         public async Task DeletePlanet(string planetId) =>
             await planetRepository.DeleteAsync(new TableId("Planet", planetId));   
 
-        public async Task UpdatePlanet(Planet planet) =>
+        public async Task UpdatePlanet(Planet planet)
+        {
+            planet.PartitionKey = "Planet";
             await planetRepository.UpdateAsync(planet);
+        }
 
         public Task SayHello()
         {
