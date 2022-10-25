@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Repository.Abstractions;
+using Infrastructure.Repository.Core.Abstractions;
 using Infrastructure.Repository.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,6 +10,7 @@ namespace Infrastructure.Configuration
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IPlanetRepository, PlanetRepository>();
+            services.AddScoped<IPlanetQuery, PlanetQuery>();
         }
     }
 }
