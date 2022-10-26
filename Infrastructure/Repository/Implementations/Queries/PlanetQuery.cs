@@ -1,10 +1,10 @@
 ﻿using Domain.Entities;
 using Domain.Options;
+using Infrastructure.Repository.Abstractions.Queries;
 using Infrastructure.Repository.Core;
-using Infrastructure.Repository.Core.Abstractions;
 using Microsoft.Extensions.Options;
 
-namespace Infrastructure.Repository.Implementations
+namespace Infrastructure.Repository.Implementations.Queries
 {
     internal class PlanetQuery : BaseQuery<Planet>, IPlanetQuery
     {

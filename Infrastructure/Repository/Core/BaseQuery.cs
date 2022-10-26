@@ -11,7 +11,7 @@ namespace Infrastructure.Repository.Core
     {
         private readonly string partitionKey;
         private readonly TableServiceClient tableServiceClient;
-        private readonly TableClient tableClient;
+        protected readonly TableClient tableClient;
 
         public BaseQuery(IOptions<AzureTableOptions> options)
         {

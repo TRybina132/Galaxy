@@ -1,6 +1,7 @@
-﻿using Infrastructure.Repository.Abstractions;
-using Infrastructure.Repository.Core.Abstractions;
-using Infrastructure.Repository.Implementations;
+﻿using Infrastructure.Repository.Abstractions.Queries;
+using Infrastructure.Repository.Abstractions.Repositories;
+using Infrastructure.Repository.Implementations.Queries;
+using Infrastructure.Repository.Implementations.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Configuration

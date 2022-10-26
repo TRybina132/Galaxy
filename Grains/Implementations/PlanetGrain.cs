@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Grains.Abstractions;
-using Infrastructure.Repository.Abstractions;
-using Infrastructure.Repository.Core.Abstractions;
+using Infrastructure.Repository.Abstractions.Queries;
+using Infrastructure.Repository.Abstractions.Repositories;
 using ManagedCode.Repository.AzureTable;
 using Orleans;
 

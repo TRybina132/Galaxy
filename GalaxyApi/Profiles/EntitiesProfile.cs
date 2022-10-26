@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Entities;
+using GalaxyApi.ViewModels;
 using GalaxyApi.ViewModels.Planet;
 
 namespace GalaxyApi.Profiles
@@ -10,6 +11,7 @@ namespace GalaxyApi.Profiles
         {
             CreateMap<Planet, PlanetViewModel>().ReverseMap();
             CreateMap<PlanetCreateViewModel, Planet>();
+            CreateMap<Species, SpeciesViewModel>().ReverseMap();
         }
     }
 }
