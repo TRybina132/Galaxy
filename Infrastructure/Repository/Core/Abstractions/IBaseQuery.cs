@@ -1,4 +1,5 @@
 ﻿using Azure.Data.Tables;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repository.Core.Abstractions
 {
@@ -6,6 +7,6 @@ namespace Infrastructure.Repository.Core.Abstractions
         where T : class, ITableEntity, new()
     {
         Task<List<T>> GetAll();
-        Task<List<T>> Filter(Func<T, bool> query);
+        Task<List<T>> Filter(Expression<Func<T, bool>> query);
     }
 }

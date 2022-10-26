@@ -1,10 +1,10 @@
 ﻿using Domain.Entities;
 using ManagedCode.Repository.AzureTable;
 
-namespace Infrastructure.Repository.Abstractions
+namespace Infrastructure.Repository.Abstractions.Repositories
 {
     public interface IPlanetRepository : IAzureTableRepository<Planet>
     {
-        Task<List<Planet>> GetAllPlanets();
+
     }
 }

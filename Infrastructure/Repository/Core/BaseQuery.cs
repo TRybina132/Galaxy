@@ -6,12 +6,12 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repository.Core
 {
-    internal class BaseQuery<T> : IBaseQuery<T>
+    internal abstract class BaseQuery<T> : IBaseQuery<T>
         where T : class, ITableEntity, new()
     {
         private readonly string partitionKey;
         private readonly TableServiceClient tableServiceClient;
-        private readonly TableClient tableClient;
+        protected readonly TableClient tableClient;
 
         public BaseQuery(IOptions<AzureTableOptions> options)
         {
@@ -20,8 +20,8 @@ namespace Infrastructure.Repository.Core
             partitionKey = typeof(T).Name;
         }
 
-        public async Task<List<T>> Filter(Func<T, bool> query) =>
-            throw new NotImplementedException();
+        public async Task<List<T>> Filter(Expression<Func<T, bool>> query) =>
+            await tableClient.QueryAsync(query).ToListAsync();
 
         public async Task<List<T>> GetAll() =>
             await tableClient
