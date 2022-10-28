@@ -2,6 +2,7 @@
 using Grains.Abstractions;
 using Infrastructure.Repository.Abstractions.Queries;
 using Infrastructure.Repository.Abstractions.Repositories;
+using ManagedCode.Repository.AzureTable;
 using Orleans;
 
 namespace Grains.Implementations
@@ -23,7 +24,13 @@ namespace Grains.Implementations
         public async Task AddSpecies(Species species)
         {
             species.PartitionKey = "Species";
+            species.Id.RowKey = species.Name;
             await speciesRepository.InsertAsync(species);
+        }
+
+        public async Task DeleteSpecies(string speciesId)
+        {
+            await speciesRepository.DeleteAsync(new TableId("Species", speciesId));
         }
     }
 }

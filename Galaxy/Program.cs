@@ -51,6 +51,10 @@ static async Task<IHost> StartSiloAsync(string[] args)
                     (context.Configuration.GetSection("AzureTable")["ConnectionString"]);
             });
 
+        siloBuilder
+            .AddSimpleMessageStreamProvider("SpeciesProvider")
+            .AddMemoryGrainStorage("PubSubStore");
+
         siloBuilder.ConfigureApplicationParts(
             parts => parts.AddApplicationPart(grainsAssembly).WithReferences());
 

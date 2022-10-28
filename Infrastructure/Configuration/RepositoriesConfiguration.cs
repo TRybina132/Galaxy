@@ -12,6 +12,9 @@ namespace Infrastructure.Configuration
         {
             services.AddScoped<IPlanetRepository, PlanetRepository>();
             services.AddScoped<IPlanetQuery, PlanetQuery>();
+            services.AddScoped<ISpeciesQuery, SpeciesQuery>();
+            services.AddScoped<ISpeciesRepository, SpeciesRepository>();
+            services.AddScoped<IPlanetSpeciesRepository, PlanetSpeciesRepository>();
         }
     }
 }
