@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
-using ManagedCode.Repository.AzureTable;
+using Infrastructure.Repository.Core.Abstractions;
 
 namespace Infrastructure.Repository.Abstractions.Repositories
 {
-    public interface IPlanetSpeciesRepository : IAzureTableRepository<PlanetSpecies>
+    public interface IPlanetSpeciesRepository : IBaseRepository<PlanetSpecies>
     {
     }
 }

@@ -1,9 +1,10 @@
 ﻿using Domain.Entities;
-using ManagedCode.Repository.AzureTable;
+using Infrastructure.Repository.Core.Abstractions;
 
 namespace Infrastructure.Repository.Abstractions.Repositories
 {
-    public interface ISpeciesRepository : IAzureTableRepository<Species>
+    public interface ISpeciesRepository : IBaseRepository<Species>
     {
+
     }
 }
