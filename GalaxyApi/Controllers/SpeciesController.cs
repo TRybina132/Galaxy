@@ -27,7 +27,7 @@ namespace GalaxyApi.Controllers
             mapper.Map<List<SpeciesViewModel>>(await speciesGrain.GetAllSpecies());
 
         [HttpPost]
-        public async Task AddSpecies([FromBody] SpeciesViewModel speciesViewModel) =>
+        public async Task AddSpecies([FromBody] SpeciesCreateViewModel speciesViewModel) =>
             await speciesGrain.AddSpecies(mapper.Map<Species>(speciesViewModel));
     }
 }

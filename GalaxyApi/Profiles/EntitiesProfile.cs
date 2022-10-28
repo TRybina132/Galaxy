@@ -11,6 +11,7 @@ namespace GalaxyApi.Profiles
         {
             CreateMap<Planet, PlanetViewModel>().ReverseMap();
             CreateMap<PlanetCreateViewModel, Planet>();
+            CreateMap<SpeciesCreateViewModel, Species>();
             CreateMap<Species, SpeciesViewModel>().ReverseMap();
         }
     }

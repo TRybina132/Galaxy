@@ -9,7 +9,7 @@ namespace Infrastructure.Repository.Core
     internal abstract class BaseQuery<T> : IBaseQuery<T>
         where T : class, ITableEntity, new()
     {
-        private readonly string partitionKey;
+        protected readonly string partitionKey;
         private readonly TableServiceClient tableServiceClient;
         protected readonly TableClient tableClient;
 

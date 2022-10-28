@@ -3,5 +3,8 @@ using Infrastructure.Repository.Core.Abstractions;
 
 namespace Infrastructure.Repository.Abstractions.Queries
 {
-    public interface IPlanetQuery : IBaseQuery<Planet> { }
+    public interface IPlanetQuery : IBaseQuery<Planet> 
+    {
+        Task<Planet> GetPlanetById(string planetId);
+    }
 }

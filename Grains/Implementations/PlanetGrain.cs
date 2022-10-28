@@ -11,6 +11,7 @@ namespace Grains.Implementations
     {
         private readonly IPlanetRepository planetRepository;
         private readonly IPlanetQuery planetQuery;
+
         public PlanetGrain(
             IPlanetRepository planetRepository,
             IPlanetQuery planetQuery)
@@ -35,6 +36,19 @@ namespace Grains.Implementations
         {
             planet.PartitionKey = "Planet";
             await planetRepository.UpdateAsync(planet);
+        }
+
+        public async Task AddSpeciesToPlanet(string planetId, Species species)
+        {
+            var streamProvider = GetStreamProvider("SpeciesProvider");
+            var planet = await planetQuery.GetPlanetById(planetId);
+            var stream = streamProvider.GetStream<PlanetSpecies>(Guid.NewGuid(), "CreatePlanetSpecies");
+            await stream.OnNextAsync(new PlanetSpecies
+            {
+                Id = new TableId(planet.Name, Guid.NewGuid().ToString()),
+                PlanetName = planetId,
+                SpeciesName = species.Name
+            });
         }
 
         public Task SayHello()
