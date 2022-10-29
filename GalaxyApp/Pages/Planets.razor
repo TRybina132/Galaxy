@@ -1,0 +1,27 @@
+﻿@page "/planets"
+@inject HttpClient httpClient
+
+@using GalaxyApp.Shared
+@using Data.ViewModels
+
+<PageTitle>Planets</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
+<MudText Class="mb-8">This component demonstrates fetching data from the server.</MudText>
+@if (planets == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+
+
+<div>@planets?.Count</div>
+
+@code {
+    private List<PlanetViewModel>? planets;
+
+    protected override async Task OnInitializedAsync()
+    {
+        planets = await httpClient.GetFromJsonAsync<List<PlanetViewModel>>("api/planets");
+        //planets = await httpClient.GetAllAsync();
+    }
+}

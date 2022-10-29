@@ -1,4 +1,4 @@
-using Galaxy.Client;
+﻿using Galaxy.Client;
 using GalaxyApi.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +20,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//  ᓚᘏᗢ Remove after ensuring that everything fine
+app.UseCors(config => config.AllowAnyOrigin());
 
 app.UseHttpsRedirection();
 
