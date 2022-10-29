@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Data.ViewModels;
 using Domain.Entities;
-using GalaxyApi.ViewModels.Planet;
 
 namespace GalaxyApi.Profiles
 {

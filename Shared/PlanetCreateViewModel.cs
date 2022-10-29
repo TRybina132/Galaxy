@@ -1,6 +1,6 @@
-﻿namespace GalaxyApi.ViewModels.Planet
-{       
-    public class PlanetViewModel
+﻿namespace Data.ViewModels
+{
+    public class PlanetCreateViewModel
     {
         public string RowKey { get; set; }
         public string Name { get; set; }
