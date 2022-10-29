@@ -1,0 +1,60 @@
+﻿@using GalaxyApp.Resources
+@inherits LayoutComponentBase
+
+<MudThemeProvider 
+    @bind-IsDarkMode = "@GalaxyProperties.CurrentTheme"
+    @ref = "@themeProvider"/>
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="0">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <MudSwitch @bind-Checked = "@GalaxyProperties.CurrentTheme"
+            Color="Color.Primary" 
+            Class="ma-4" 
+            T="bool">
+            @if (GalaxyProperties.CurrentTheme)
+            {
+                <MudIcon 
+                    Icon="@Icons.Filled.DarkMode"/>
+            }
+            else
+            {
+                <MudIcon 
+                    Icon="@Icons.Filled.LightMode"/>
+            }
+        </MudSwitch>
+    </MudAppBar>
+    <MudDrawer @bind-Open="drawerOpen" Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">GalaxyApp</MudText>
+        </MudDrawerHeader>
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private bool drawerOpen = true;
+    private MudThemeProvider? themeProvider;
+
+    void DrawerToggle()
+    {
+        drawerOpen = !drawerOpen;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            GalaxyProperties.CurrentTheme = await themeProvider.GetSystemPreference();
+            StateHasChanged();
+        }
+    }
+}
