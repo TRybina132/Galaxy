@@ -1,12 +1,13 @@
 ﻿using ApiClients.Base;
+using ApiClients.Configuration;
 using ApiClients.Realizations.Abstractions;
-using GalaxyApi.ViewModels.Planet;
+using Data.ViewModels;
 
 namespace ApiClients.Realizations
 {
     internal class PlanetHttpClient : BaseHttpClient<PlanetViewModel>, IPlanetHttpClient
     {
-        public PlanetHttpClient(string path) : base(path)
+        public PlanetHttpClient() : base($"{ClientConstants.ApiUrl}/planets")
         {
         }
     }

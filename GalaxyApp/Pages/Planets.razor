@@ -1,6 +1,7 @@
 ﻿@page "/planets"
-@inject HttpClient httpClient
+@inject IPlanetHttpClient httpClient
 
+@using ApiClients.Realizations.Abstractions
 @using GalaxyApp.Shared
 @using Data.ViewModels
 
@@ -21,7 +22,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        planets = await httpClient.GetFromJsonAsync<List<PlanetViewModel>>("api/planets");
+        planets = await httpClient.GetAllAsync();
         //planets = await httpClient.GetAllAsync();
     }
 }

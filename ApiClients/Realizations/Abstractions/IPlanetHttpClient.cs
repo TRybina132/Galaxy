@@ -1,5 +1,5 @@
 ﻿using ApiClients.Base.Abstractions;
-using GalaxyApi.ViewModels.Planet;
+using Data.ViewModels;
 
 namespace ApiClients.Realizations.Abstractions
 {

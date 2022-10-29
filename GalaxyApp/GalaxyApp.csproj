@@ -13,7 +13,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Shared\Shared.csproj" />
+	  <ProjectReference Include="..\ApiClients\ApiClients.csproj" />
+	  <ProjectReference Include="..\Shared\Data.csproj" />
 	</ItemGroup>
 	
 	
