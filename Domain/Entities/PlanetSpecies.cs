@@ -4,8 +4,10 @@ using ManagedCode.Repository.AzureTable;
 
 namespace Domain.Entities
 {
-    public class PlanetSpecies : AzureTableItem, ITableEntity
+    public class PlanetSpecies : ITableEntity
     {
+        public string PartitionKey { get; set; }
+        public string RowKey { get; set; }
         public string PlanetName { get; set; } 
         public string SpeciesName { get; set; }
         DateTimeOffset? ITableEntity.Timestamp { get; set; } = default!;

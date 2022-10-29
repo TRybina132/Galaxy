@@ -45,8 +45,8 @@ namespace Grains.Implementations
             var stream = streamProvider.GetStream<PlanetSpecies>(Guid.NewGuid(), "CreatePlanetSpecies");
             await stream.OnNextAsync(new PlanetSpecies
             {
-                Id = new TableId(planet.Name, Guid.NewGuid().ToString()),
-                PlanetName = planetId,
+                RowKey = planetId,
+                PlanetName = planet.Name,
                 SpeciesName = species.Name
             });
         }

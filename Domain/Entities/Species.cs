@@ -1,11 +1,12 @@
 ﻿using Azure;
 using Azure.Data.Tables;
-using ManagedCode.Repository.AzureTable;
 
 namespace Domain.Entities
 {
-    public class Species : AzureTableItem, ITableEntity
+    public class Species : ITableEntity
     {
+        public string PartitionKey { get; set; }
+        public string RowKey { get; set; }
         public string Name { get; set; }
         public int SpeciesCount { get; set; }
         DateTimeOffset? ITableEntity.Timestamp { get; set; } = default!;

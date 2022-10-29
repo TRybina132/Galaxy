@@ -24,13 +24,13 @@ namespace Grains.Implementations
         public async Task AddSpecies(Species species)
         {
             species.PartitionKey = "Species";
-            species.Id.RowKey = species.Name;
+            species.RowKey = species.Name;
             await speciesRepository.InsertAsync(species);
         }
 
         public async Task DeleteSpecies(string speciesId)
         {
-            await speciesRepository.DeleteAsync(new TableId("Species", speciesId));
+            await speciesRepository.DeleteAsync(speciesId);
         }
     }
 }
