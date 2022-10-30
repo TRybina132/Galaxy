@@ -12,24 +12,24 @@
     <MudItem xs="12" sm = "7">
         <MudPaper Class="pa-4">
             <MudForm @ref = "@form">
-                <MudTextField T = "string"
+                <MudTextField @ref = "@name" 
+                    T = "string"
                     Label="Name"
                     Required = "true"
-                    Value="@planet.Name"
                     RequiredError="Name is required"/>
-                <MudNumericField T = "long"
+                <MudNumericField @ref = "@population" 
+                        T = "long"
                         Label="Population"
                         Required = "true"
-                        Value="@planet.Population"
                         RequiredError="Population is required"/>
 
-            <div class="d-flex align-center justify-space-between">            
-                <MudButton Variant="Variant.Filled" 
-                    Color = "Color.Primary"
-                    Class="ml-auto"
-                    OnClick="OnCreateClick">
-                    Create
-                </MudButton>
+            <div class="d-flex align-center justify-space-between save-button">            
+                <MudButton 
+                    Variant="Variant.Filled" 
+                    StartIcon="@Icons.Material.Filled.Save"
+                    Color="Color.Primary"  
+                    Size="Size.Small"
+                    OnClick="OnCreateClick">Save</MudButton>
             </div>
             </MudForm>
         </MudPaper>
@@ -37,13 +37,26 @@
 </MudGrid>
 
 @code {
-    private PlanetCreateViewModel planet = new PlanetCreateViewModel();
-    private MudForm form;
+    private MudTextField<string>? name;
+    private MudNumericField<long>? population;
+    private MudForm? form;
 
     public async Task OnCreateClick(MouseEventArgs eventArgs)
     {
+        PlanetCreateViewModel planet = new PlanetCreateViewModel
+        {
+            Name = name.Value,
+            Population = population.Value
+        };
+
         var response = await httpClient.AddPlanetAsync(planet);
         if (response.IsSuccessStatusCode)
             navManager.NavigateTo("/planets");
     }
 }
+
+<style>
+    .save-button{
+        margin-top: 4%;
+    }
+</style>

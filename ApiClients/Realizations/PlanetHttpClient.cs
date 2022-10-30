@@ -11,7 +11,10 @@ namespace ApiClients.Realizations
         public PlanetHttpClient()
             : base($"{ClientConstants.ApiUrl}/planets") { }
 
-        public async Task<HttpResponseMessage> AddPlanetAsync(PlanetCreateViewModel planet) =>
-            await httpClient.PostAsJsonAsync(path,planet);
+        public async Task<HttpResponseMessage> AddPlanetAsync(PlanetCreateViewModel planet)
+        {
+            planet.RowKey = Guid.NewGuid().ToString();
+            return await httpClient.PostAsJsonAsync(path, planet);
+        }
     }
 }

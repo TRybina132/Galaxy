@@ -34,8 +34,11 @@ namespace GalaxyApi.Controllers
             await planetGrain.SayHello();
 
         [HttpPost]
-        public async Task AddPlanet([FromBody] PlanetCreateViewModel planet) =>
-            await planetGrain.InsertPlanet(mapper.Map<Planet>(planet));
+        public async Task AddPlanet([FromBody] PlanetCreateViewModel planet)
+        {
+            var mappedPlanet = mapper.Map<Planet>(planet);
+            await planetGrain.InsertPlanet(mappedPlanet);
+        }
 
         [HttpPut]
         public async Task UpdatePlanet([FromBody] PlanetViewModel planet) =>
