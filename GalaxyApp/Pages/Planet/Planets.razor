@@ -1,0 +1,53 @@
+﻿@page "/planets"
+
+@using ApiClients.Realizations.Abstractions
+@using Data.ViewModels.Planet
+@using GalaxyApp.Shared
+
+@inject IPlanetHttpClient httpClient
+@inject NavigationManager navManager
+
+<PageTitle>Planets</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true"> Full list of planets </MudText>
+<MudText Class="mb-8">Here you can see all avialble planets in demention 💫🛸🪐, 
+        please mantain planets carefully💗</MudText>
+@if (planets == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+}
+else
+{
+    <MudTable Items = "@planets" Dense = "@true" Hover = "@true">
+        <ToolBarContent>
+            <MudText Typo="@Typo.h6">Planets</MudText>
+            <MudSpacer/>
+             <MudButton 
+                 Variant="Variant.Filled"
+                 Color="Color.Primary"
+                 OnClick="OnAddClick">
+                    Add</MudButton>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>Name</MudTh>
+            <MudTh>Population</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel = "Name">@context.Name</MudTd>
+            <MudTd DataLabel = "Population">@context.Population</MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+
+
+@code {
+    private List<PlanetViewModel>? planets;
+
+    protected override async Task OnInitializedAsync()
+    {
+        planets = await httpClient.GetAllAsync();
+    }
+
+    public void OnAddClick(MouseEventArgs eventArgs) =>
+        navManager.NavigateTo("/planets/create");
+}

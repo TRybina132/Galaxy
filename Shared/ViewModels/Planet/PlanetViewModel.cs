@@ -1,4 +1,4 @@
-﻿namespace Data.ViewModels
+﻿namespace Data.ViewModels.Planet
 {
     public class PlanetViewModel
     {

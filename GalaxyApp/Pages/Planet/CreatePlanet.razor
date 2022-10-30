@@ -1,0 +1,49 @@
+﻿@page "/planets/create"
+
+@using ApiClients.Realizations.Abstractions
+@using Data.ViewModels.Planet
+
+@inject IPlanetHttpClient httpClient
+@inject NavigationManager navManager
+
+<h3>Create new planet</h3>
+
+<MudGrid>
+    <MudItem xs="12" sm = "7">
+        <MudPaper Class="pa-4">
+            <MudForm @ref = "@form">
+                <MudTextField T = "string"
+                    Label="Name"
+                    Required = "true"
+                    Value="@planet.Name"
+                    RequiredError="Name is required"/>
+                <MudNumericField T = "long"
+                        Label="Population"
+                        Required = "true"
+                        Value="@planet.Population"
+                        RequiredError="Population is required"/>
+
+            <div class="d-flex align-center justify-space-between">            
+                <MudButton Variant="Variant.Filled" 
+                    Color = "Color.Primary"
+                    Class="ml-auto"
+                    OnClick="OnCreateClick">
+                    Create
+                </MudButton>
+            </div>
+            </MudForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private PlanetCreateViewModel planet = new PlanetCreateViewModel();
+    private MudForm form;
+
+    public async Task OnCreateClick(MouseEventArgs eventArgs)
+    {
+        var response = await httpClient.AddPlanetAsync(planet);
+        if (response.IsSuccessStatusCode)
+            navManager.NavigateTo("/planets");
+    }
+}

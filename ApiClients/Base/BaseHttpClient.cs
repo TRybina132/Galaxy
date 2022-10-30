@@ -5,8 +5,8 @@ namespace ApiClients.Base
 {
     internal abstract class BaseHttpClient<T> : IHttpClient<T>
     {
-        private readonly string path;
-        private readonly HttpClient httpClient;
+        protected readonly string path;
+        protected readonly HttpClient httpClient;
 
         protected BaseHttpClient(string path)
         {
