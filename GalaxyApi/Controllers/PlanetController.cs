@@ -3,7 +3,6 @@ using Data.ViewModels.Planet;
 using Domain.Entities;
 using Galaxy.Client;
 using GalaxyApi.ViewModels;
-using GalaxyApi.ViewModels.Planet;
 using Grains.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
