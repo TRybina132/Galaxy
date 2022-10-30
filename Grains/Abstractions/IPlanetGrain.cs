@@ -6,6 +6,7 @@ namespace Grains.Abstractions
     public interface IPlanetGrain : IGrainWithStringKey
     {
         Task SayHello();
+        Task AddSpeciesToPlanet(string planetId, Species species);
         Task<List<Planet>> GetAllPlanets();
         Task InsertPlanet(Planet planet);
         Task DeletePlanet(string planetId);

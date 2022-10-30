@@ -22,4 +22,8 @@
 	  <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Orleans_CodeGenInputs Remove="Abstractions\IPlanetSpeciesGrain.cs" />
+	</ItemGroup>
+
 </Project>
