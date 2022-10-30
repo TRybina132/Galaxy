@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Data.ViewModels.Planet;
 using Domain.Entities;
 using Galaxy.Client;
 using GalaxyApi.ViewModels;
@@ -35,8 +36,11 @@ namespace GalaxyApi.Controllers
             await planetGrain.SayHello();
 
         [HttpPost]
-        public async Task AddPlanet([FromBody] PlanetCreateViewModel planet) =>
-            await planetGrain.InsertPlanet(mapper.Map<Planet>(planet));
+        public async Task AddPlanet([FromBody] PlanetCreateViewModel planet)
+        {
+            var mappedPlanet = mapper.Map<Planet>(planet);
+            await planetGrain.InsertPlanet(mappedPlanet);
+        }
 
         [HttpPost("addSpecies/{planetId}")]
         public async Task AddSpeciesToPlanet([FromRoute] string planetId, [FromBody] SpeciesViewModel species) =>

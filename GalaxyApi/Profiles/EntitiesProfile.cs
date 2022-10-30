@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Data.ViewModels.Planet;
 using Domain.Entities;
 using GalaxyApi.ViewModels;
 using GalaxyApi.ViewModels.Planet;
