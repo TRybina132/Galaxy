@@ -8,7 +8,8 @@ using Orleans.Runtime;
 
 namespace Galaxy.Client
 {
-    //  🌈 We implements IHostedService to register this service in Di container 💖
+    //  🌈 We implements IHostedService to register this service in Di container,
+    //          and it can be started and stopped💖
     public class ClusterClient : IHostedService
     {
         private IClusterClient ConfigureClient(ClusterOptions clusterOptions)

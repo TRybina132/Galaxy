@@ -20,10 +20,15 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Domain\Domain.csproj" />
 	  <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+	  <ProjectReference Include="..\Shared\Data.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Orleans_CodeGenInputs Remove="Abstractions\IPlanetSpeciesGrain.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Orleans_CodeGenInputs Remove="Abstractions\IAuthGrain.cs" />
 	</ItemGroup>
 
 </Project>
