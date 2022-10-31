@@ -26,4 +26,8 @@
 	  <Orleans_CodeGenInputs Remove="Abstractions\IPlanetSpeciesGrain.cs" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Orleans_CodeGenInputs Remove="Abstractions\IAuthGrain.cs" />
+	</ItemGroup>
+
 </Project>
