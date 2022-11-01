@@ -1,29 +1,27 @@
 ﻿using Data.ViewModels.Auth;
 using Domain.Entities;
-using Grains.Abstractions;
+using Grains.Handlers.Abstractions;
 using Infrastructure.Repository.Abstractions.Queries;
-using Orleans;
 
-namespace Grains.Implementations
+namespace Grains.Handlers.Realizations
 {
-    public class AuthGrain : Grain, IAuthGrain
+    public class AuthHandler : IAuthHandler
     {
         private readonly IUserQuery userQuery;
 
-        public AuthGrain(IUserQuery userQuery)
+        public AuthHandler(IUserQuery userQuery)
         {
             this.userQuery = userQuery;
         }
 
-        public async Task<LoginResponseViewModel> Login(LoginViewModel login)
+        public async Task<LoginResponseViewModel> GenerateToken(LoginViewModel login)
         {
-            //  ᓚᘏᗢ Move to service
-            User? user;
             try
             {
-                user = await userQuery.GetUserByName(login.Username);
+                User user = await userQuery.GetUserByName(login.Username);
+                
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new LoginResponseViewModel
                 {
