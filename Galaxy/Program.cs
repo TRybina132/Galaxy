@@ -1,4 +1,5 @@
 ﻿using Domain.Options;
+using Grains.Handlers.Configuration;
 using Grains.Implementations;
 using Infrastructure.Configuration;
 using Microsoft.Extensions.Configuration;
@@ -41,6 +42,8 @@ static async Task<IHost> StartSiloAsync(string[] args)
 
         siloBuilder.Configure<AzureTableOptions>
             (context.Configuration.GetSection("AzureTable"));
+        siloBuilder.Configure<JwtOptions>
+            (context.Configuration.GetSection("JWTOptions"));
 
         siloBuilder.AddAzureTableGrainStorage(
             name: "planetsStates",
@@ -61,6 +64,7 @@ static async Task<IHost> StartSiloAsync(string[] args)
         siloBuilder.ConfigureServices(services =>
         {
             services.AddRepositories();
+            services.AddHandlers();
         });
     });
 
