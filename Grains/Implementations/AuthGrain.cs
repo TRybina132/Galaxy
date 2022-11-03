@@ -4,6 +4,7 @@ using Grains.Abstractions;
 using Grains.Handlers.Abstractions;
 using Infrastructure.Repository.Abstractions.Queries;
 using Orleans;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Grains.Implementations
 {
@@ -20,15 +21,27 @@ namespace Grains.Implementations
             this.authHandler = authHandler;
         }
 
+        private string GenerateToken(User user)
+        {
+            var credentials = authHandler.GetUserClaims(user);
+            var signature = authHandler.GetSigningCredentials();
+            var token = authHandler.GenerateTokenOptions(signature, credentials);
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
         public async Task<LoginResponseViewModel> Login(LoginViewModel login)
         {
-            //  ᓚᘏᗢ Move to service
-            User? user;
             try
             {
-                user = await userQuery.GetUserByName(login.Username);
+                User user = await userQuery.GetUserByName(login.Username);
+                string token = GenerateToken(user);
+                return new LoginResponseViewModel
+                {
+                    IsSuccess = true,
+                    Token = token
+                };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new LoginResponseViewModel
                 {
@@ -36,8 +49,6 @@ namespace Grains.Implementations
                     ErrorMessage = ex.Message
                 };
             }
-
-            return new LoginResponseViewModel { IsSuccess = true };
         }
     }
 }

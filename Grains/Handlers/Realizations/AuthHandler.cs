@@ -12,14 +12,11 @@ namespace Grains.Handlers.Realizations
 {
     public class AuthHandler : IAuthHandler
     {
-        private readonly IUserQuery userQuery;
         private readonly JwtOptions jwtOptions;
 
         public AuthHandler(
-            IUserQuery userQuery,
             IOptions<JwtOptions> jwtOptions)
         {
-            this.userQuery = userQuery;
             this.jwtOptions = jwtOptions.Value;
         }
 
