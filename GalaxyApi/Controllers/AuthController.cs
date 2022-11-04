@@ -16,7 +16,7 @@ namespace GalaxyApi.Controllers
             this.clusterClient = clusterClient;
         }
 
-        [HttpPost]
+        [HttpPost("/login")]
         public async Task<LoginResponseViewModel> Login(LoginViewModel login)
         {
             IAuthGrain authGrain = clusterClient.Client.GetGrain<IAuthGrain>(login.Username);
