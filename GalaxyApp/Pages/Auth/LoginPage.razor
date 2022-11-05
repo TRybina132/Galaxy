@@ -1,0 +1,48 @@
+﻿@page "/login"
+
+@using ApiClients.Realizations.Abstractions
+
+@inject IPlanetHttpClient httpClient;
+@inject NavigationManager navManager;
+
+<MudGrid>
+    <MudItem xs="12" sm = "7">
+        <MudPaper Class="pa-4">
+            <MudForm @ref = "form">
+                <MudTextField 
+                    @ref = "@username"
+                    T = "string"
+                    Label="Username"
+                    Required = "true"
+                    RequiredError = "Username is required"/>
+
+                 <MudTextField 
+                        @ref = "@password"
+                        Label = "Password"
+                        HelperText="Choose a strong password"
+                        InputType="InputType.Password"
+                        T = "string"/>
+
+            <div class="d-flex align-center justify-space-between save-button">            
+                <MudButton 
+                    Variant="Variant.Filled" 
+                    StartIcon="@Icons.Material.Filled.Login"
+                    Color="Color.Primary"  
+                    Size="Size.Small"
+                    OnClick="OnLoginClick">Sign in</MudButton>
+            </div>
+            </MudForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private MudTextField<string>? username;
+    private MudTextField<string>? password;
+    private MudForm? form;
+
+    public async Task OnLoginClick(MouseEventArgs eventArgs)
+    {
+
+    }
+}

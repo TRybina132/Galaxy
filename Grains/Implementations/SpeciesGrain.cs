@@ -32,5 +32,10 @@ namespace Grains.Implementations
         {
             await speciesRepository.DeleteAsync(speciesId);
         }
+
+        public Task<Species> FindSpeciesById(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

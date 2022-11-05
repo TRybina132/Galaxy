@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Data.ViewModels.Planet;
+using Data.ViewModels.Species;
 using Domain.Entities;
-using GalaxyApi.ViewModels;
 
 namespace GalaxyApi.Profiles
 {

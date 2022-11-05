@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Data.ViewModels.Species;
 using Domain.Entities;
 using Galaxy.Client;
-using GalaxyApi.ViewModels;
 using Grains.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
