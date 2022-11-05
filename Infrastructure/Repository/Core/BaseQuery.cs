@@ -27,5 +27,10 @@ namespace Infrastructure.Repository.Core
             await tableClient
                 .QueryAsync<T>(entity => entity.PartitionKey == partitionKey)
                 .ToListAsync();
+
+        public async Task<T?> GetById(string id) =>
+            await tableClient
+            .QueryAsync<T>(entity => entity.RowKey == id)
+            .FirstOrDefaultAsync();
     }
 }

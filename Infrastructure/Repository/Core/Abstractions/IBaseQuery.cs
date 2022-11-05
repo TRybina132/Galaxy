@@ -8,5 +8,6 @@ namespace Infrastructure.Repository.Core.Abstractions
     {
         Task<List<T>> GetAll();
         Task<List<T>> Filter(Expression<Func<T, bool>> query);
+        Task<T?> GetById(string id);
     }
 }

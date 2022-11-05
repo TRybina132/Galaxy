@@ -54,6 +54,10 @@ namespace Galaxy.Client
                 {
                     await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
                 }
+                catch (Exception ex)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+                }
             }
         }
 
