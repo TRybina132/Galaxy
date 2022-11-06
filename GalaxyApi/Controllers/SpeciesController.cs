@@ -3,6 +3,7 @@ using Data.ViewModels.Species;
 using Domain.Entities;
 using Galaxy.Client;
 using Grains.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GalaxyApi.Controllers
@@ -23,6 +24,7 @@ namespace GalaxyApi.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<List<SpeciesViewModel>> GetAllSpecies() =>
             mapper.Map<List<SpeciesViewModel>>(await speciesGrain.GetAllSpecies());
 

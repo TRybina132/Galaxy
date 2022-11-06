@@ -1,7 +1,10 @@
-﻿using Galaxy.Client;
+﻿using Domain.Entities;
+using Galaxy.Client;
 using GalaxyApi.Middleware;
 using GalaxyApi.Profiles;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 
 namespace GalaxyApi.Configurations
 {
@@ -13,11 +16,39 @@ namespace GalaxyApi.Configurations
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
             services.AddClusterClient();
             services.AddAutoMapper(typeof(EntitiesProfile).Assembly);
 
+            //services.AddIdentity<User, IdentityRole<string>>();
+
             services.AddCors(ConfigureCors);
+
+            services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter a valid token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
+            });
         }
 
         private static void ConfigureCors(CorsOptions corsOptions)
