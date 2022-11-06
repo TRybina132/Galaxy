@@ -9,6 +9,7 @@ namespace ApiClients.Configuration
         public static void AddApiClients(this IServiceCollection services)
         {
             services.AddScoped<IPlanetHttpClient, PlanetHttpClient>();
+            services.AddScoped<IAuthHttpClient, AuthHttpClient>();
         }
     }
 }

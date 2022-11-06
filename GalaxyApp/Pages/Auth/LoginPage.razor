@@ -1,48 +1,53 @@
 ﻿@page "/login"
 
 @using ApiClients.Realizations.Abstractions
+@using Data.ViewModels.Auth
 
-@inject IPlanetHttpClient httpClient;
+@inject IAuthHttpClient httpClient;
 @inject NavigationManager navManager;
 
 <MudGrid>
     <MudItem xs="12" sm = "7">
         <MudPaper Class="pa-4">
-            <MudForm @ref = "form">
+            <EditForm 
+                Model="@login" OnValidSubmit="OnLoginClick">
                 <MudTextField 
-                    @ref = "@username"
+                    @bind-Value = "@login.Username"
                     T = "string"
-                    Label="Username"
-                    Required = "true"
-                    RequiredError = "Username is required"/>
+                    Label="Username"/>
 
                  <MudTextField 
-                        @ref = "@password"
-                        Label = "Password"
-                        HelperText="Choose a strong password"
-                        InputType="InputType.Password"
-                        T = "string"/>
+                    @bind-Value = "@login.Password"
+                    Label = "Password"
+                    HelperText="Choose a strong password"
+                    InputType="InputType.Password"
+                    T = "string"/>
 
             <div class="d-flex align-center justify-space-between save-button">            
-                <MudButton 
+                <MudButton
                     Variant="Variant.Filled" 
                     StartIcon="@Icons.Material.Filled.Login"
                     Color="Color.Primary"  
                     Size="Size.Small"
-                    OnClick="OnLoginClick">Sign in</MudButton>
+                    ButtonType="ButtonType.Submit">Sign in</MudButton>
             </div>
-            </MudForm>
+            </EditForm>
         </MudPaper>
     </MudItem>
 </MudGrid>
 
 @code {
-    private MudTextField<string>? username;
-    private MudTextField<string>? password;
-    private MudForm? form;
+    private LoginViewModel login = new LoginViewModel();
 
-    public async Task OnLoginClick(MouseEventArgs eventArgs)
+    public async Task OnLoginClick(EditContext context)
     {
-
+        Console.WriteLine("CALL");
+        Console.WriteLine(login.Username);
+        Console.WriteLine(login.Password);
+        var response = await httpClient.LoginAsync(login);
+        if (response.IsSuccess)
+            navManager.NavigateTo("/planets");
+        else
+            Console.WriteLine(response.ErrorMessage);
     }
 }

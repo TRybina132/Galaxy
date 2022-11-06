@@ -1,4 +1,5 @@
 ﻿using GalaxyApi.Configurations;
+using GalaxyApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseCors("blazor");
 

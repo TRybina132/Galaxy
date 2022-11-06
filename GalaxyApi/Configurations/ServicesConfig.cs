@@ -1,4 +1,5 @@
 ﻿using Galaxy.Client;
+using GalaxyApi.Middleware;
 using GalaxyApi.Profiles;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
@@ -8,6 +9,8 @@ namespace GalaxyApi.Configurations
     {
         public static void ConfigureServices(this IServiceCollection services)
         {
+            services.AddScoped<ExceptionHandlerMiddleware>();
+
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();

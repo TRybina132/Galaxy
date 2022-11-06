@@ -13,7 +13,5 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5152") });
 builder.Services.AddMudServices();
 builder.Services.AddApiClients();
-builder.Services.AddFormValidation(config =>
-  config.AddFluentValidation(typeof(LoginValidator).Assembly));
 
 await builder.Build().RunAsync();
