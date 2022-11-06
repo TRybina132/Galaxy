@@ -24,5 +24,8 @@ namespace Grains.Implementations
 
         public async Task<User> GetById(string id) =>
             await userQuery.GetById(id) ?? throw new Exception($"User with Id:{id} not found");
+
+        public async Task<User> GetByUsername(string username) =>
+            await userQuery.GetUserByName(username);
     }
 }

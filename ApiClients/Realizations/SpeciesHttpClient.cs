@@ -1,7 +1,7 @@
 ﻿using ApiClients.Base;
 using ApiClients.Configuration;
 using ApiClients.Realizations.Abstractions;
-using GalaxyApi.ViewModels;
+using Data.ViewModels.Species;
 
 namespace ApiClients.Realizations
 {
