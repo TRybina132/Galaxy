@@ -2,6 +2,7 @@
 using Galaxy.Client;
 using GalaxyApi.Middleware;
 using GalaxyApi.Profiles;
+using Infrastructure.Configuration;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
@@ -13,7 +14,7 @@ namespace GalaxyApi.Configurations
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<ExceptionHandlerMiddleware>();
-
+            services.AddRepositories();
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddClusterClient();
