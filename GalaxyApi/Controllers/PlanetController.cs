@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
 using Data.ViewModels.Planet;
+using Data.ViewModels.Species;
 using Domain.Entities;
 using Galaxy.Client;
-using GalaxyApi.ViewModels;
 using Grains.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GalaxyApi.Controllers
 {
     [Route("api/planets")]
+    [Authorize]
     [ApiController]
     public class PlanetController : ControllerBase
     {

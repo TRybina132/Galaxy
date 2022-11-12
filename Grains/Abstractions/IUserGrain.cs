@@ -6,6 +6,7 @@ namespace Grains.Abstractions
     {
         Task<List<User>> GetAllUsers();
         Task<User> GetById(string id);
+        Task<User> GetByUsername(string username);
         Task AddUser(User user);
     }
 }

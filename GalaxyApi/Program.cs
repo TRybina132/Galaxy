@@ -1,9 +1,11 @@
 ﻿using GalaxyApi.Configurations;
+using GalaxyApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.ConfigureAuthentication();
 builder.Services.ConfigureServices();
 
 var app = builder.Build();
@@ -15,11 +17,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseCors("blazor");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

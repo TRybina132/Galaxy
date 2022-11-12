@@ -28,9 +28,10 @@ namespace Grains.Implementations
             await speciesRepository.InsertAsync(species);
         }
 
-        public async Task DeleteSpecies(string speciesId)
-        {
+        public async Task DeleteSpecies(string speciesId) =>
             await speciesRepository.DeleteAsync(speciesId);
-        }
+
+        public async Task<Species> FindSpeciesById(string id) =>
+            await speciesQuery.GetById(id) ?? throw new Exception($"Species with Id:{id} not found");
     }
 }

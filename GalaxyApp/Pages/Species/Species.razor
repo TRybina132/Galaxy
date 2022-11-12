@@ -1,0 +1,42 @@
+﻿@page "/species"
+
+@using ApiClients.Realizations.Abstractions
+@using Data.ViewModels.Species
+
+@inject ISpeciesHttpClient httpClient;
+
+<PageTitle>Species</PageTitle>
+
+@if (species == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+}
+else
+{
+    <MudTable Items = "@species" Dense = "@true" Hover = "@true">
+        <ToolBarContent>
+            <MudText Typo="@Typo.h6">Species</MudText>
+            <MudIconButton 
+                ButtonType="ButtonType.Button"
+                Icon="@Icons.Material.Filled.Add"
+                Color="@Color.Primary"/>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>Name</MudTh>
+            <MudTh>Species count</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel = "Name">@context.Name</MudTd>
+                <MudTd DataLabel = "SpeciesCount">@context.SpeciesCount</MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+
+@code {
+    private List<SpeciesViewModel> species;
+
+    protected override async Task OnInitializedAsync()
+    {
+        species = await httpClient.GetAllAsync();
+    }
+}

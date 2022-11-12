@@ -1,8 +1,7 @@
-﻿using ApiClients.Realizations;
-using ApiClients.Realizations.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
+﻿using GalaxyApp.ApiClients.Realizations;
+using GalaxyApp.ApiClients.Realizations.Abstractions;
 
-namespace ApiClients.Configuration
+namespace GalaxyApp.ApiClients.Configuration
 {
     public static class ClientConfiguration
     {
