@@ -2,6 +2,7 @@
 using Galaxy.Client;
 using GalaxyApi.Middleware;
 using GalaxyApi.Profiles;
+using GalaxyApi.Security;
 using Infrastructure.Configuration;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
@@ -19,8 +20,10 @@ namespace GalaxyApi.Configurations
             services.AddEndpointsApiExplorer();
             services.AddClusterClient();
             services.AddAutoMapper(typeof(EntitiesProfile).Assembly);
+            
+            services.AddScoped<PasswordHasher<User>>();
+            services.AddTransient<IUserStore<User>, UserStore>();
 
-            //services.AddIdentity<User, IdentityRole<string>>();
 
             services.AddCors(ConfigureCors);
 

@@ -1,6 +1,8 @@
 ﻿using Data.ViewModels.Auth;
+using Domain.Entities;
 using Galaxy.Client;
 using Grains.Abstractions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GalaxyApi.Controllers
@@ -10,10 +12,14 @@ namespace GalaxyApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ClusterClient clusterClient;
+        private readonly PasswordHasher<User> passwordHasher;
 
-        public AuthController(ClusterClient clusterClient)
+        public AuthController(
+            ClusterClient clusterClient, 
+            PasswordHasher<User> passwordHasher)
         {
             this.clusterClient = clusterClient;
+            this.passwordHasher = passwordHasher;
         }
 
         [HttpPost("login")]
