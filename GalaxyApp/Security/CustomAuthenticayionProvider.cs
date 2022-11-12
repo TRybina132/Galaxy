@@ -25,7 +25,7 @@ namespace GalaxyApp.Security
                 return new AuthenticationState(new ClaimsPrincipal(claimsIdentity));
             }
             else
-                return null;
+                return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
     }
 }
