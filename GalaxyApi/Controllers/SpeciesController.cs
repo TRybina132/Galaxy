@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GalaxyApi.Controllers
 {
     [Route("api/species")]
+    [Authorize]
     [ApiController]
     public class SpeciesController : ControllerBase
     {
@@ -24,9 +25,12 @@ namespace GalaxyApi.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<List<SpeciesViewModel>> GetAllSpecies() =>
             mapper.Map<List<SpeciesViewModel>>(await speciesGrain.GetAllSpecies());
+
+        [HttpGet("{id}")]
+        public async Task<SpeciesViewModel> GetSpeciesById([FromRoute] string id) =>
+            mapper.Map<SpeciesViewModel>(await speciesGrain.FindSpeciesById(id));
 
         [HttpPost]
         public async Task AddSpecies([FromBody] SpeciesCreateViewModel speciesViewModel) =>
