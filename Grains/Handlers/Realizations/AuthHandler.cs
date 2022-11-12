@@ -1,7 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Options;
 using Grains.Handlers.Abstractions;
-using Infrastructure.Repository.Abstractions.Queries;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
