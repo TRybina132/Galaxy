@@ -17,7 +17,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ApiClients\ApiClients.csproj" />
 	  <ProjectReference Include="..\Shared\Data.csproj" />
 	</ItemGroup>
 	

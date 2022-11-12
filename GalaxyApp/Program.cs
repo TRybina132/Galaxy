@@ -1,4 +1,4 @@
-using ApiClients.Configuration;
+using GalaxyApp.ApiClients.Configuration;
 using GalaxyApp;
 using GalaxyApp.Helpers.Configurations;
 using GalaxyApp.Security;
