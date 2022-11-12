@@ -1,0 +1,55 @@
+﻿@page "/login"
+
+@using GalaxyApp.ApiClients.Realizations.Abstractions
+@using Data.ViewModels.Auth
+@using GalaxyApp.Helpers.Abstractions;
+
+@inject IAuthHttpClient httpClient;
+@inject NavigationManager navManager;
+@inject IBrowserStorageHelper storageHelper;
+
+<MudGrid>
+    <MudItem xs="12" sm = "7">
+        <MudPaper Class="pa-4">
+            <EditForm 
+                Model="@login" OnValidSubmit="OnLoginClick">
+                <MudTextField 
+                    @bind-Value = "@login.Username"
+                    T = "string"
+                    Label="Username"/>
+
+                 <MudTextField 
+                    @bind-Value = "@login.Password"
+                    Label = "Password"
+                    HelperText="Choose a strong password"
+                    InputType="InputType.Password"
+                    T = "string"/>
+
+            <div class="d-flex align-center justify-space-between save-button">            
+                <MudButton
+                    Variant="Variant.Filled" 
+                    StartIcon="@Icons.Material.Filled.Login"
+                    Color="Color.Primary"  
+                    Size="Size.Small"
+                    ButtonType="ButtonType.Submit">Sign in</MudButton>
+            </div>
+            </EditForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private LoginViewModel login = new LoginViewModel();
+
+    public async Task OnLoginClick(EditContext context)
+    {
+        var response = await httpClient.LoginAsync(login);
+        if (response.IsSuccess)
+        {
+            navManager.NavigateTo("/planets");
+            await storageHelper.SetTokenToStorage(response.Token);
+        }
+        else
+            Console.WriteLine(response.ErrorMessage);
+    }
+}

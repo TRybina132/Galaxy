@@ -10,6 +10,7 @@ namespace ApiClients.Configuration
         {
             services.AddScoped<ISpeciesHttpClient, SpeciesHttpClient>();
             services.AddScoped<IPlanetHttpClient, PlanetHttpClient>();
+            services.AddScoped<IAuthHttpClient, AuthHttpClient>();
         }
     }
 }

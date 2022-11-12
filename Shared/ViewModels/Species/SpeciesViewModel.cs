@@ -1,4 +1,4 @@
-﻿namespace GalaxyApi.ViewModels
+﻿namespace Data.ViewModels.Species
 {
     public class SpeciesViewModel
     {
