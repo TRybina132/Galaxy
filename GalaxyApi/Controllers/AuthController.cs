@@ -12,14 +12,11 @@ namespace GalaxyApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ClusterClient clusterClient;
-        private readonly PasswordHasher<User> passwordHasher;
 
         public AuthController(
-            ClusterClient clusterClient, 
-            PasswordHasher<User> passwordHasher)
+            ClusterClient clusterClient)
         {
             this.clusterClient = clusterClient;
-            this.passwordHasher = passwordHasher;
         }
 
         [HttpPost("login")]
