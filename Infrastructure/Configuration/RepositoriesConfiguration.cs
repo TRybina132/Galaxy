@@ -18,6 +18,7 @@ namespace Infrastructure.Configuration
             services.AddScoped<IPlanetQuery, PlanetQuery>();
             services.AddScoped<ISpeciesQuery, SpeciesQuery>();
             services.AddScoped<IUserQuery, UserQuery>();
+            services.AddScoped<IPlanetSpeciesQuery, PlanetSpeciesQuery>();
         }
     }
 }

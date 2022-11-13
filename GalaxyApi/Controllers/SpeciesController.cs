@@ -32,6 +32,11 @@ namespace GalaxyApi.Controllers
         public async Task<SpeciesViewModel> GetSpeciesById([FromRoute] string id) =>
             mapper.Map<SpeciesViewModel>(await speciesGrain.FindSpeciesById(id));
 
+        [AllowAnonymous]
+        [HttpGet("planet/{planetName}")]
+        public async Task<List<SpeciesViewModel>> GetSpeciesForPlanet([FromRoute] string planetName) =>
+            mapper.Map<List<SpeciesViewModel>>(await speciesGrain.GetSpeciesForPlanet(planetName));
+
         [HttpPost]
         public async Task AddSpecies([FromBody] SpeciesCreateViewModel speciesViewModel) =>
             await speciesGrain.AddSpecies(mapper.Map<Species>(speciesViewModel));

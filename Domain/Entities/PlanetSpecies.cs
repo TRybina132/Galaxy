@@ -8,7 +8,7 @@ namespace Domain.Entities
     {
         public string PartitionKey { get; set; }
         public string RowKey { get; set; }
-        public string PlanetName { get; set; } 
+        public string SpeciesId { get; set; } 
         public string SpeciesName { get; set; }
         DateTimeOffset? ITableEntity.Timestamp { get; set; } = default!;
         ETag ITableEntity.ETag { get; set; }

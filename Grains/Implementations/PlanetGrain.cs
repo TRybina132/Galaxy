@@ -46,7 +46,8 @@ namespace Grains.Implementations
             await stream.OnNextAsync(new PlanetSpecies
             {
                 RowKey = planetId,
-                PlanetName = planet.Name,
+                PartitionKey= planet.Name,
+                SpeciesId = species.RowKey,
                 SpeciesName = species.Name
             });
         }

@@ -2,7 +2,6 @@
 using Grains.Abstractions;
 using Infrastructure.Repository.Abstractions.Queries;
 using Infrastructure.Repository.Abstractions.Repositories;
-using ManagedCode.Repository.AzureTable;
 using Orleans;
 
 namespace Grains.Implementations
@@ -17,6 +16,13 @@ namespace Grains.Implementations
             this.speciesRepository = speciesRepository;
             this.speciesQuery = speciesQuery;
         }
+
+        public override Task OnActivateAsync()
+        {
+            Console.WriteLine($"GRAIN ID: {this.GetPrimaryKeyString()}");
+            return Task.CompletedTask;
+        }
+
 
         public async Task<List<Species>> GetAllSpecies() =>
             await speciesQuery.GetAll();
@@ -33,5 +39,11 @@ namespace Grains.Implementations
 
         public async Task<Species> FindSpeciesById(string id) =>
             await speciesQuery.GetById(id) ?? throw new Exception($"Species with Id:{id} not found");
+
+        public async Task<List<Species>> GetSpeciesForPlanet(string planetName)
+        {
+            var planetSpeciesGrain = GrainFactory.GetGrain<IPlanetSpeciesGrain>("insadads");
+            return await planetSpeciesGrain.GetSpeciesForPlanet(planetName);
+        }
     }
 }
