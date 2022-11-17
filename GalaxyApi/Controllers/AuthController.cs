@@ -28,5 +28,11 @@ namespace GalaxyApi.Controllers
             IAuthGrain authGrain = clusterClient.Client.GetGrain<IAuthGrain>(login.Username);
             return await authGrain.Login(login);
         }
+
+        [HttpPost("Register")]
+        public async Task<LoginResponseViewModel> Register([FromBody]RegisterViewModel registerViewModel)
+        {
+            return null;
+        }
     }
 }
