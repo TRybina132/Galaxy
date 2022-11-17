@@ -15,18 +15,18 @@ namespace Grains.Implementations
         private readonly IUserQuery userQuery;
         private readonly IUserRepository userRepository;
         private readonly IAuthHandler authHandler;
-        private readonly PasswordHasher<User> passwordHasher;
+        private readonly IPasswordHasher<User> passwordHasher;
 
         public AuthGrain(
             IUserQuery userQuery,
             IUserRepository userRepository,
             IAuthHandler authHandler,
-            PasswordHasher<User> passwordHasher)
+            IPasswordHasher<User> passwordHasher)
         {
             this.userQuery = userQuery;
             this.authHandler = authHandler;
             this.userRepository = userRepository;
-            this.passwordHasher= passwordHasher;
+            this.passwordHasher = passwordHasher;
         }
 
         private string GenerateToken(User user)
@@ -42,13 +42,22 @@ namespace Grains.Implementations
             try
             {
                 User user = await userQuery.GetUserByName(login.Username);
-               
-                string token = GenerateToken(user);
-                return new LoginResponseViewModel
+                if(passwordHasher.VerifyHashedPassword(user, user.Password,login.Password) == PasswordVerificationResult.Success)
                 {
-                    IsSuccess = true,
-                    Token = token
-                };
+                    string token = GenerateToken(user);
+                    return new LoginResponseViewModel
+                    {
+                        IsSuccess = true,
+                        Token = token
+                    };
+                }
+                else
+                    return new LoginResponseViewModel
+                    {
+                        IsSuccess = false,
+                        ErrorMessage = "Invalid username or password"
+                    };
+
             }
             catch (Exception ex)
             {

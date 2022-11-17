@@ -9,12 +9,12 @@ namespace GalaxyApi.Security
     {
         private readonly IUserRepository userRepository;
         private readonly IUserQuery userQuery;
-        private readonly PasswordHasher<User> passwordHasher;
+        private readonly IPasswordHasher<User> passwordHasher;
 
         public UserStore(
             IUserRepository userRepository,
             IUserQuery userQuery,
-            PasswordHasher<User> passwordHasher)
+            IPasswordHasher<User> passwordHasher)
         {
             this.userRepository = userRepository;
             this.userQuery = userQuery;

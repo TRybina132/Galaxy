@@ -12,11 +12,11 @@ namespace GalaxyApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ClusterClient clusterClient;
-        private readonly PasswordHasher<User> passwordHasher;
+        private readonly IPasswordHasher<User> passwordHasher;
 
         public AuthController(
             ClusterClient clusterClient, 
-            PasswordHasher<User> passwordHasher)
+            IPasswordHasher<User> passwordHasher)
         {
             this.clusterClient = clusterClient;
             this.passwordHasher = passwordHasher;
@@ -34,5 +34,9 @@ namespace GalaxyApi.Controllers
         {
             return null;
         }
+
+        [HttpPost("hash")]
+        public Task<string> HashPassword([FromBody] string password) =>
+            Task.FromResult(passwordHasher.HashPassword(new User(), password));
     }
 }
