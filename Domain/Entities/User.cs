@@ -6,7 +6,7 @@ namespace Domain.Entities
 {
     public class User : ITableEntity
     {
-        public string PartitionKey { get; set; }
+        public string PartitionKey { get; set; } = "User";
         public string RowKey { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

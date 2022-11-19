@@ -10,5 +10,17 @@ namespace Infrastructure.Repository.Implementations.Repositories
     {
         public SpeciesRepository(IOptions<AzureTableOptions> options) 
             : base(options) { }
+
+        public async Task IncrementPopulation(string speciesName)
+        {
+            Species? species = 
+                await tableClient.QueryAsync<Species>(species => species.Name == speciesName).FirstOrDefaultAsync();
+
+            if (species == null)
+                return;
+            species.SpeciesCount++;
+            
+            await UpdateAsync(species);
+        }
     }
 }

@@ -16,13 +16,16 @@ namespace Grains.Implementations
         private readonly IUserRepository userRepository;
         private readonly IAuthHandler authHandler;
         private readonly IPasswordHasher<User> passwordHasher;
+        private readonly ISpeciesRepository speciesRepository;
 
         public AuthGrain(
             IUserQuery userQuery,
             IUserRepository userRepository,
             IAuthHandler authHandler,
-            IPasswordHasher<User> passwordHasher)
+            IPasswordHasher<User> passwordHasher,
+            ISpeciesRepository speciesRepository)
         {
+            this.speciesRepository = speciesRepository;
             this.userQuery = userQuery;
             this.authHandler = authHandler;
             this.userRepository = userRepository;
@@ -69,9 +72,27 @@ namespace Grains.Implementations
             }
         }
 
-        public Task<LoginResponseViewModel> Register(RegisterViewModel register)
+        public async Task<LoginResponseViewModel> Register(RegisterViewModel register)
         {
-            return null;
+            User user = new User
+            {
+                RowKey = Guid.NewGuid().ToString(),
+                Email = register.Email,
+                Name = register.Name,
+                PartitionKey = "User",
+                SpeciesType = register.SelectedSpecies
+            };
+
+            user.Password = passwordHasher.HashPassword(user, register.Password);
+            await userRepository.InsertAsync(user);
+
+            await speciesRepository.IncrementPopulation(register.SelectedSpecies);
+
+            return await Login(new LoginViewModel
+            {
+                Username = register.Name,
+                Password = register.Password
+            });
         }
     }
 }
