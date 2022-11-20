@@ -1,4 +1,5 @@
-﻿using Azure.Data.Tables;
+﻿using Azure;
+using Azure.Data.Tables;
 using Domain.Options;
 using Infrastructure.Repository.Core.Abstractions;
 using Microsoft.Extensions.Options;
@@ -29,7 +30,10 @@ namespace Infrastructure.Repository.Core
         public async Task DeleteAsync(string entityId) =>
             await tableClient.DeleteEntityAsync(partitionKey, entityId);
 
-        public async Task UpdateAsync(T entity) =>
+        public async Task UpdateAsync(T entity)
+        {
+            entity.ETag = ETag.All;
             await tableClient.UpdateEntityAsync(entity, entity.ETag);
+        }
     }
 }

@@ -5,6 +5,6 @@ namespace Infrastructure.Repository.Abstractions.Repositories
 {
     public interface ISpeciesRepository : IBaseRepository<Species>
     {
-
+        Task IncrementPopulation(string speciesName);
     }
 }

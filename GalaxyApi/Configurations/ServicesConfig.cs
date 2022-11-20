@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Identity;
 using Galaxy.Client;
 using GalaxyApi.Middleware;
 using GalaxyApi.Profiles;
@@ -21,7 +22,7 @@ namespace GalaxyApi.Configurations
             services.AddClusterClient();
             services.AddAutoMapper(typeof(EntitiesProfile).Assembly);
             
-            services.AddScoped<PasswordHasher<User>>();
+            services.AddScoped<IPasswordHasher<User>, BcryptPasswordHasher<User>>();
             services.AddTransient<IUserStore<User>, UserStore>();
 
 

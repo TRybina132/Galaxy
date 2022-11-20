@@ -1,8 +1,6 @@
 ﻿using Data.ViewModels.Auth;
-using Domain.Entities;
 using Galaxy.Client;
 using Grains.Abstractions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GalaxyApi.Controllers
@@ -25,5 +23,9 @@ namespace GalaxyApi.Controllers
             IAuthGrain authGrain = clusterClient.Client.GetGrain<IAuthGrain>(login.Username);
             return await authGrain.Login(login);
         }
+
+        [HttpPost("register")]
+        public async Task<LoginResponseViewModel> Register([FromBody] RegisterViewModel registerViewModel) =>
+            await clusterClient.Client.GetGrain<IAuthGrain>(registerViewModel.Name).Register(registerViewModel);
     }
 }

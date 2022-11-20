@@ -1,8 +1,12 @@
-﻿using Domain.Options;
+﻿using Domain.Entities;
+using Domain.Identity;
+using Domain.Options;
 using Grains.Handlers.Configuration;
 using Grains.Implementations;
 using Infrastructure.Configuration;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Orleans;
 using Orleans.Configuration;
@@ -64,6 +68,7 @@ static async Task<IHost> StartSiloAsync(string[] args)
         siloBuilder.ConfigureServices(services =>
         {
             services.AddRepositories();
+            services.AddScoped<IPasswordHasher<User>, BcryptPasswordHasher<User>>();
             services.AddHandlers();
         });
     });

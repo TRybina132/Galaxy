@@ -40,6 +40,7 @@
 
 @code {
     private LoginViewModel login = new LoginViewModel();
+    private bool _isFailed = false;
 
     public async Task OnLoginClick(EditContext context)
     {

@@ -6,5 +6,6 @@ namespace Grains.Abstractions
     public interface IAuthGrain : IGrainWithStringKey
     {
         Task<LoginResponseViewModel> Login(LoginViewModel login);
+        Task<LoginResponseViewModel> Register(RegisterViewModel register);
     }
 }
