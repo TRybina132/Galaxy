@@ -26,6 +26,6 @@ namespace GalaxyApi.Controllers
 
         [HttpPost("register")]
         public async Task<LoginResponseViewModel> Register([FromBody] RegisterViewModel registerViewModel) =>
-            await clusterClient.Client.GetGrain<IAuthGrain>(registerViewModel.Name).Register(registerViewModel);
+            await clusterClient.Client.GetGrain<IAuthGrain>(registerViewModel.Username).Register(registerViewModel);
     }
 }

@@ -2,10 +2,11 @@
 using Grains.Abstractions;
 using Infrastructure.Repository.Abstractions.Queries;
 using Infrastructure.Repository.Abstractions.Repositories;
+using Orleans;
 
 namespace Grains.Implementations
 {
-    public class UserGrain : IUserGrain
+    public class UserGrain : Grain, IUserGrain
     {
         private readonly IUserQuery userQuery;
         private readonly IUserRepository userRepository;

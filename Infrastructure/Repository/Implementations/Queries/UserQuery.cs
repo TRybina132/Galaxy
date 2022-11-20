@@ -14,7 +14,7 @@ namespace Infrastructure.Repository.Implementations.Queries
         public async Task<User> GetUserByName(string username)
         {
             var user = await tableClient
-                .QueryAsync<User>(user => user.Name == username)
+                .QueryAsync<User>(user => user.Username == username)
                 .FirstOrDefaultAsync();
             return user ?? throw new Exception($"User with username: {username} not found");
         }

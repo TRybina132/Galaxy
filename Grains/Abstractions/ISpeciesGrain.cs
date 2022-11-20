@@ -8,5 +8,6 @@ namespace Grains.Abstractions
         Task<List<Species>> GetAllSpecies();
         Task<Species> FindSpeciesById(string id);
         Task AddSpecies(Species species);
+        Task IncrementPopulation(string speciesName);
     }
 }

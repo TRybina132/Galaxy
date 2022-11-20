@@ -12,23 +12,14 @@ namespace Grains.Implementations
 {
     public class AuthGrain : Grain, IAuthGrain
     {
-        private readonly IUserQuery userQuery;
-        private readonly IUserRepository userRepository;
         private readonly IAuthHandler authHandler;
         private readonly IPasswordHasher<User> passwordHasher;
-        private readonly ISpeciesRepository speciesRepository;
 
         public AuthGrain(
-            IUserQuery userQuery,
-            IUserRepository userRepository,
             IAuthHandler authHandler,
-            IPasswordHasher<User> passwordHasher,
-            ISpeciesRepository speciesRepository)
+            IPasswordHasher<User> passwordHasher)
         {
-            this.speciesRepository = speciesRepository;
-            this.userQuery = userQuery;
             this.authHandler = authHandler;
-            this.userRepository = userRepository;
             this.passwordHasher = passwordHasher;
         }
 
@@ -44,7 +35,7 @@ namespace Grains.Implementations
         {
             try
             {
-                User user = await userQuery.GetUserByName(login.Username);
+                User user = await GrainFactory.GetGrain<IUserGrain>(login.Username).GetByUsername(login.Username);
                 if(passwordHasher.VerifyHashedPassword(user, user.Password,login.Password) == PasswordVerificationResult.Success)
                 {
                     string token = GenerateToken(user);
@@ -78,20 +69,20 @@ namespace Grains.Implementations
             {
                 RowKey = Guid.NewGuid().ToString(),
                 Email = register.Email,
-                Name = register.Name,
+                Username = register.Username,
                 PartitionKey = "User",
                 SpeciesType = register.SelectedSpecies
             };
 
             user.Password = passwordHasher.HashPassword(user, register.Password);
-            await userRepository.InsertAsync(user);
+            await GrainFactory.GetGrain<IUserGrain>(user.RowKey).AddUser(user);
 
-            if(string.IsNullOrEmpty(register.SelectedSpecies))
-                await speciesRepository.IncrementPopulation(register.SelectedSpecies);
+            if (string.IsNullOrEmpty(register.SelectedSpecies))
+                await GrainFactory.GetGrain<ISpeciesGrain>(user.RowKey).IncrementPopulation(register.SelectedSpecies);
 
             return await Login(new LoginViewModel
             {
-                Username = register.Name,
+                Username = register.Username,
                 Password = register.Password
             });
         }
