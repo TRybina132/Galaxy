@@ -18,13 +18,26 @@ namespace GalaxyApp.ApiClients.Realizations
         public async Task<LoginResponseViewModel> LoginAsync(LoginViewModel loginViewModel)
         {
             var response =
-                await httpClient.PostAsJsonAsync("https://localhost:5152/api/auth/login", loginViewModel);
+                await httpClient.PostAsJsonAsync(path + "/login", loginViewModel);
             return await response.Content.ReadFromJsonAsync<LoginResponseViewModel>() ?? 
                     new LoginResponseViewModel
                     {
                         ErrorMessage = $"Status code: {response.StatusCode}",
-                        IsSuccess = true
+                        IsSuccess = false
                     };
+        }
+
+        public async Task<LoginResponseViewModel> RegisterAsync(RegisterViewModel registerViewModel)
+        {
+            var response = 
+                await httpClient.PostAsJsonAsync(path + "/register", registerViewModel);
+
+            return await response.Content.ReadFromJsonAsync<LoginResponseViewModel>() ??
+                new LoginResponseViewModel
+                {
+                    ErrorMessage = $"Status code: {response.StatusCode}",
+                    IsSuccess = false
+                };
         }
     }
 }

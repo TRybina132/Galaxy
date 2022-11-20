@@ -86,7 +86,8 @@ namespace Grains.Implementations
             user.Password = passwordHasher.HashPassword(user, register.Password);
             await userRepository.InsertAsync(user);
 
-            await speciesRepository.IncrementPopulation(register.SelectedSpecies);
+            if(string.IsNullOrEmpty(register.SelectedSpecies))
+                await speciesRepository.IncrementPopulation(register.SelectedSpecies);
 
             return await Login(new LoginViewModel
             {

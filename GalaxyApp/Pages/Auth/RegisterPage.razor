@@ -1,0 +1,53 @@
+﻿@page "/register"
+
+@using Data.ViewModels.Auth;
+@using GalaxyApp.ApiClients.Realizations.Abstractions;
+@using GalaxyApp.Helpers.Abstractions;
+
+@inject IAuthHttpClient httpClient;
+@inject NavigationManager navManager;
+@inject IBrowserStorageHelper storageHelper;
+
+<MudGrid>
+    <MudItem xs="12" sm = "7">
+        <MudPaper Class="pa-4">
+            <EditForm 
+                Model="@registerModel" OnValidSubmit="OnRegisterClick">
+                <MudTextField 
+                    @bind-Value = "@registerModel.Name"
+                    T = "string"
+                    Label="Name"/>
+
+                 <MudTextField 
+                    @bind-Value = "@registerModel.Password"
+                    Label = "Password"
+                    HelperText="Choose a strong password"
+                    InputType="InputType.Password"
+                    T = "string"/>
+
+                <div class="d-flex align-center justify-space-between save-button">            
+                    <MudButton
+                        Variant="Variant.Filled" 
+                        StartIcon="@Icons.Material.Filled.AppRegistration"
+                        Color="Color.Primary"  
+                        Size="Size.Small"
+                        ButtonType="ButtonType.Submit">Sign in</MudButton>
+                </div>
+            </EditForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid> 
+
+@code {
+    private RegisterViewModel registerModel = new RegisterViewModel();
+
+    private async Task OnRegisterClick()
+    {
+        var response = await httpClient.RegisterAsync(registerModel);
+        if (response.IsSuccess)
+        {
+            navManager.NavigateTo("/planets");
+            await storageHelper.SetTokenToStorage(response.Token);
+        }
+    }
+}
