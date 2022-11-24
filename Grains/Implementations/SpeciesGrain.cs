@@ -35,5 +35,11 @@ namespace Grains.Implementations
 
         public async Task IncrementPopulation(string speciesName) =>
             await speciesRepository.IncrementPopulation(speciesName);
+
+        public async Task<Species> FindSpeciesByName(string name)
+        {
+            var species = await speciesQuery.GetSpeciesByName(name);
+            return species;
+        }
     }
 }
