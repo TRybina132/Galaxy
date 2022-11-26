@@ -22,7 +22,7 @@ namespace Grains.Handlers.Realizations
         public List<Claim> GetUserClaims(User user) =>
             new List<Claim>
             {
-                new Claim("username", user.Name),
+                new Claim("username", user.Username),
                 new Claim("id", user.RowKey)
             };
 

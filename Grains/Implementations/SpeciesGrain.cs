@@ -2,7 +2,6 @@
 using Grains.Abstractions;
 using Infrastructure.Repository.Abstractions.Queries;
 using Infrastructure.Repository.Abstractions.Repositories;
-using ManagedCode.Repository.AzureTable;
 using Orleans;
 
 namespace Grains.Implementations
@@ -33,5 +32,14 @@ namespace Grains.Implementations
 
         public async Task<Species> FindSpeciesById(string id) =>
             await speciesQuery.GetById(id) ?? throw new Exception($"Species with Id:{id} not found");
+
+        public async Task IncrementPopulation(string speciesName) =>
+            await speciesRepository.IncrementPopulation(speciesName);
+
+        public async Task<Species> FindSpeciesByName(string name)
+        {
+            var species = await speciesQuery.GetSpeciesByName(name);
+            return species;
+        }
     }
 }

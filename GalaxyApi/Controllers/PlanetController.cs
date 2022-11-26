@@ -16,35 +16,35 @@ namespace GalaxyApi.Controllers
     {
         private readonly ClusterClient clusterClient;
         private readonly IMapper mapper;
-        private readonly IPlanetGrain planetGrain;
 
         public PlanetController(ClusterClient clusterClient, IMapper mapper)
         {
             this.mapper = mapper;
             this.clusterClient = clusterClient;
-            planetGrain = clusterClient.Client.GetGrain<IPlanetGrain>("instance");
         }
 
         [HttpGet]
         public async Task<List<PlanetViewModel>> GetAllPlanets()
         {
-            var planets = await planetGrain.GetAllPlanets();
+            var userId = HttpContext.User.Claims.Where(claim => claim.Type == "id").FirstOrDefault();
+            var planets = await clusterClient.Client.GetGrain<IPlanetGrain>(userId.Value).GetAllPlanets();
             return mapper.Map<List<PlanetViewModel>>(planets);
         }
 
         [HttpGet("hi")]
         public async Task SayHello() =>
-            await planetGrain.SayHello();
+            await clusterClient.Client.GetGrain<IPlanetGrain>("planets").SayHello();
 
         [HttpPost]
         public async Task AddPlanet([FromBody] PlanetCreateViewModel planet)
         {
             var mappedPlanet = mapper.Map<Planet>(planet);
-            await planetGrain.InsertPlanet(mappedPlanet);
+            await clusterClient.Client.GetGrain<IPlanetGrain>(planet.RowKey).InsertPlanet(mappedPlanet);
         }
 
         [HttpPost("addSpecies/{planetId}")]
         public async Task AddSpeciesToPlanet([FromRoute] string planetId, [FromBody] SpeciesViewModel species) =>
-            await planetGrain.AddSpeciesToPlanet(planetId, mapper.Map<Species>(species));
+            await clusterClient.Client.GetGrain<IPlanetGrain>(planetId)
+                .AddSpeciesToPlanet(planetId, mapper.Map<Species>(species));
     }
 }

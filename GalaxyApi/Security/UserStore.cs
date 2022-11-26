@@ -46,23 +46,23 @@ namespace GalaxyApi.Security
         public void Dispose() { return; }
 
         public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken cancellationToken) =>
-            Task.FromResult(user.Name.ToUpper());
+            Task.FromResult(user.Username.ToUpper());
 
         public Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken) =>
             Task.FromResult(user.RowKey);
 
         public Task<string> GetUserNameAsync(User user, CancellationToken cancellationToken) =>
-            Task.FromResult(user.Name);
+            Task.FromResult(user.Username);
 
         public async Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken cancellationToken)
         {
-            user.Name = normalizedName;
+            user.Username = normalizedName;
             await userRepository.UpdateAsync(user);
         }
 
         public async Task SetUserNameAsync(User user, string userName, CancellationToken cancellationToken)
         {
-            user.Name = userName;
+            user.Username = userName;
             await userRepository.UpdateAsync(user);
         }
 

@@ -5,6 +5,6 @@ namespace Infrastructure.Repository.Abstractions.Queries
 {
     public interface ISpeciesQuery : IBaseQuery<Species>
     {
-
+        Task<Species> GetSpeciesByName(string name);
     }
 }
