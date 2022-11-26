@@ -33,6 +33,10 @@ namespace GalaxyApi.Controllers
         public async Task<SpeciesViewModel> GetSpeciesById([FromRoute] string id) =>
             mapper.Map<SpeciesViewModel>(await clusterClient.Client.GetGrain<ISpeciesGrain>(id).FindSpeciesById(id));
 
+        [HttpGet("byName/{speciesName}")]
+        public async Task<SpeciesViewModel> GetSpeciesByName([FromRoute] string speciesName) =>
+            mapper.Map<SpeciesViewModel>(await clusterClient.Client.GetGrain<ISpeciesGrain>(speciesName).FindSpeciesByName(speciesName));
+
         [HttpPost]
         public async Task AddSpecies([FromBody] SpeciesCreateViewModel speciesViewModel) =>
             await clusterClient.Client.GetGrain<ISpeciesGrain>(speciesViewModel.RowKey).AddSpecies(mapper.Map<Species>(speciesViewModel));
