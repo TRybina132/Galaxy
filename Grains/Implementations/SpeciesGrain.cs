@@ -23,7 +23,7 @@ namespace Grains.Implementations
         public async Task AddSpecies(Species species)
         {
             species.PartitionKey = "Species";
-            species.RowKey = species.Name;
+            species.RowKey = Guid.NewGuid().ToString();
             await speciesRepository.InsertAsync(species);
         }
 

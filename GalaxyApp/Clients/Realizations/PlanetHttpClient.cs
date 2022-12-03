@@ -17,7 +17,6 @@ namespace GalaxyApp.ApiClients.Realizations
         {
             var token = await storageHelper.GetTokenAsync();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            planet.RowKey = Guid.NewGuid().ToString();
             return await httpClient.PostAsJsonAsync(Path, planet);
         }
     }
