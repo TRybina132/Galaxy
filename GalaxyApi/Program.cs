@@ -1,4 +1,5 @@
 ﻿using GalaxyApi.Configurations;
+using GalaxyApi.Hubs;
 using GalaxyApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,5 +28,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/Chat");
 
 app.Run();

@@ -21,6 +21,7 @@ namespace GalaxyApi.Configurations
             services.AddEndpointsApiExplorer();
             services.AddClusterClient();
             services.AddAutoMapper(typeof(EntitiesProfile).Assembly);
+            services.AddSignalR();
             
             services.AddScoped<IPasswordHasher<User>, BcryptPasswordHasher<User>>();
             services.AddTransient<IUserStore<User>, UserStore>();
