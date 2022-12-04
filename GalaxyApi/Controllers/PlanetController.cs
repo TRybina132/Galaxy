@@ -3,6 +3,7 @@ using Data.ViewModels.Planet;
 using Data.ViewModels.Species;
 using Domain.Entities;
 using Galaxy.Client;
+using GalaxyApi.Middleware;
 using Grains.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,8 @@ namespace GalaxyApi.Controllers
         public async Task AddPlanet([FromBody] PlanetCreateViewModel planet)
         {
             var mappedPlanet = mapper.Map<Planet>(planet);
-            await clusterClient.Client.GetGrain<IPlanetGrain>(planet.RowKey).InsertPlanet(mappedPlanet);
+            var userId = HttpContext.GetUserIdFromJwtToken();
+            await clusterClient.Client.GetGrain<IPlanetGrain>(userId).InsertPlanet(mappedPlanet);
         }
 
         [HttpPost("addSpecies/{planetId}")]

@@ -26,6 +26,7 @@ namespace Grains.Implementations
         public async Task InsertPlanet(Planet planet)
         {
             planet.PartitionKey = "Planet";
+            planet.RowKey = Guid.NewGuid().ToString();
             await planetRepository.InsertAsync(planet);
         }
 

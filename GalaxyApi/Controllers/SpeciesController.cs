@@ -2,6 +2,7 @@
 using Data.ViewModels.Species;
 using Domain.Entities;
 using Galaxy.Client;
+using GalaxyApi.Middleware;
 using Grains.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,8 +26,8 @@ namespace GalaxyApi.Controllers
         [HttpGet]
         public async Task<List<SpeciesViewModel>> GetAllSpecies()
         {
-            var userId = HttpContext.User.Claims.Where(claim => claim.Type == "id").FirstOrDefault();
-            return mapper.Map<List<SpeciesViewModel>>(await clusterClient.Client.GetGrain<ISpeciesGrain>(userId.Value).GetAllSpecies());
+            var userId = HttpContext.GetUserIdFromJwtToken();
+            return mapper.Map<List<SpeciesViewModel>>(await clusterClient.Client.GetGrain<ISpeciesGrain>(userId).GetAllSpecies());
         }
 
         [HttpGet("{id}")]
@@ -39,6 +40,6 @@ namespace GalaxyApi.Controllers
 
         [HttpPost]
         public async Task AddSpecies([FromBody] SpeciesCreateViewModel speciesViewModel) =>
-            await clusterClient.Client.GetGrain<ISpeciesGrain>(speciesViewModel.RowKey).AddSpecies(mapper.Map<Species>(speciesViewModel));
+            await clusterClient.Client.GetGrain<ISpeciesGrain>(HttpContext.GetUserIdFromJwtToken()).AddSpecies(mapper.Map<Species>(speciesViewModel));
     }
 }
