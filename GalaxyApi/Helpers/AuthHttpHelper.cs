@@ -1,4 +1,4 @@
-namespace GalaxyApi.Middleware;
+namespace GalaxyApi.Helpers;
     
 public static class AuthHttpHelper
 {

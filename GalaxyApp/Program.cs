@@ -1,5 +1,8 @@
+using System.ComponentModel;
+using Data.SignalR;
 using GalaxyApp.ApiClients.Configuration;
 using GalaxyApp;
+using GalaxyApp.Clients.SignalR;
 using GalaxyApp.Helpers.Configurations;
 using GalaxyApp.Security;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -10,6 +13,8 @@ using MudBlazor.Services;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.AddScoped<IChatClient, ChatClient>();
 
 builder.Services.AddMudServices();
 builder.Services.AddApiClients();

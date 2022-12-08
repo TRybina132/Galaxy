@@ -1,0 +1,40 @@
+@page "/Chat"
+
+@using Data.SignalR
+@using Data.ViewModels.Auth
+
+@inject IChatClient chatClient;
+
+<h3>Chat</h3>
+
+<MudInput Value="message"></MudInput>
+
+
+<MudButton OnClick="async () => await chatClient.SendMessage(message)">Send</MudButton>
+
+<MudList>
+    @foreach (var message in messages)
+    {
+        <MudListItem>@message</MudListItem>
+    }
+</MudList>
+
+@code {
+    string message = "";
+    List<string> messages = new List<string>();
+
+    private void OnMessageReceived(UserViewModel user, string message) =>
+        messages.Add(message);
+
+    private void OnSayHello() =>
+        messages.Add("💞HELLO💞");
+    
+    protected override async Task OnInitializedAsync()
+    {
+        chatClient.OnMessageReceived = OnMessageReceived;
+        chatClient.OnSayHello = OnSayHello;
+        await chatClient.InitAsync();
+    }
+
+
+}

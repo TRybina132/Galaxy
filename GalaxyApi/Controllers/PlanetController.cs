@@ -3,6 +3,7 @@ using Data.ViewModels.Planet;
 using Data.ViewModels.Species;
 using Domain.Entities;
 using Galaxy.Client;
+using GalaxyApi.Helpers;
 using GalaxyApi.Middleware;
 using Grains.Abstractions;
 using Microsoft.AspNetCore.Authorization;
@@ -27,8 +28,8 @@ namespace GalaxyApi.Controllers
         [HttpGet]
         public async Task<List<PlanetViewModel>> GetAllPlanets()
         {
-            var userId = HttpContext.User.Claims.Where(claim => claim.Type == "id").FirstOrDefault();
-            var planets = await clusterClient.Client.GetGrain<IPlanetGrain>(userId.Value).GetAllPlanets();
+            var userId = HttpContext.GetUserIdFromJwtToken();
+            var planets = await clusterClient.Client.GetGrain<IPlanetGrain>(userId).GetAllPlanets();
             return mapper.Map<List<PlanetViewModel>>(planets);
         }
 

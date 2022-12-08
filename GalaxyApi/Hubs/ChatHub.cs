@@ -24,4 +24,7 @@ public class ChatHub : Hub<IChatClient>, IChatHub
             await Clients.All.ReceiveMessage(user, message);   
         }
     }
+
+    public async Task SayHi() =>
+        await Clients.All.SayHello();
 }
