@@ -61,7 +61,7 @@ namespace GalaxyApi.Configurations
             corsOptions.AddPolicy("blazor",
                 policy =>
                 {
-                    policy.WithOrigins("https://localhost:44398");
+                    policy.WithOrigins("http://localhost:44398");
                     policy.WithHeaders("*");
                     policy.WithMethods("*");
                 });
