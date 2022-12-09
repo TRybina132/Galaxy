@@ -7,24 +7,14 @@ namespace GalaxyApi.Hubs;
 
 //  💖 Here we using strongly typed hub. We can use real
 //      client methods instead methods` names  🌈
-public class ChatHub : Hub<IChatClient>, IChatHub
+public class ChatHub : Hub, IChatHub
 {
     public async Task SendMessage(string message)
     {
-        var id = Context?.User?.Claims.FirstOrDefault(claim => claim.Type == "id");
-        var username = Context?.User?.Claims.FirstOrDefault(claim => claim.Type == "username");
-        if (id != null && username != null)
-        {
-            var user = new UserViewModel()
-            {
-                RowKey = id.Value,
-                Username = username.Value
-            };
-            
-            await Clients.All.ReceiveMessage(user, message);   
-        }
+        
+        await Clients.All.SendAsync("ReceiveMessage",new UserViewModel(), "HELLO");
     }
 
     public async Task SayHi() =>
-        await Clients.All.SayHello();
+        await Clients.All.SendAsync("SayHello");
 }

@@ -28,7 +28,7 @@ public class ChatClient : IChatClient
 
     public async Task SendMessage(string message)
     {
-        await connection.InvokeAsync(message);
+        await connection.InvokeAsync("SendMessage",message);
     }
 
     public Task SayHello()
@@ -41,6 +41,7 @@ public class ChatClient : IChatClient
     {
         try
         {
+            connection.On<UserViewModel, string>("ReceiveMessage", OnMessageReceived);
             await connection.StartAsync();
         }
         catch (Exception ex)

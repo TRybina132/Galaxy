@@ -7,7 +7,7 @@
 
 <h3>Chat</h3>
 
-<MudInput Value="message"></MudInput>
+<MudInput Value="@message"></MudInput>
 
 
 <MudButton OnClick="async () => await chatClient.SendMessage(message)">Send</MudButton>
@@ -20,7 +20,7 @@
 </MudList>
 
 @code {
-    string message = "";
+    string message = "Hello";
     List<string> messages = new List<string>();
 
     private void OnMessageReceived(UserViewModel user, string message) =>
