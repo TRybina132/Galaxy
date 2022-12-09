@@ -4,6 +4,7 @@
 @using Data.ViewModels.Auth
 
 @inject IChatClient chatClient;
+@inject IWinktClient winktClient;
 
 <h3>Chat</h3>
 
@@ -28,12 +29,19 @@
 
     private void OnSayHello() =>
         messages.Add("💞HELLO💞");
-    
+
+    private void OnReceive(object message)
+    {
+        messages.Add("WINKT");
+    }
+
     protected override async Task OnInitializedAsync()
     {
         chatClient.OnMessageReceived = OnMessageReceived;
         chatClient.OnSayHello = OnSayHello;
+        winktClient.SubscribeOnDoSome1(OnReceive);
         await chatClient.InitAsync();
+        await winktClient.InitAsync();
     }
 
 

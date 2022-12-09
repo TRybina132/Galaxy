@@ -1,7 +1,6 @@
-using System.ComponentModel;
 using Data.SignalR;
-using GalaxyApp.ApiClients.Configuration;
 using GalaxyApp;
+using GalaxyApp.ApiClients.Configuration;
 using GalaxyApp.Clients.SignalR;
 using GalaxyApp.Helpers.Configurations;
 using GalaxyApp.Security;
@@ -15,6 +14,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped<IChatClient, ChatClient>();
+builder.Services.AddScoped<IWinktClient, WinktClient>();
 
 builder.Services.AddMudServices();
 builder.Services.AddApiClients();
