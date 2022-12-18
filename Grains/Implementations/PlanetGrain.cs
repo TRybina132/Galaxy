@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Grains.Abstractions;
+using Grains.Clients.Abstractions;
 using Infrastructure.Repository.Abstractions.Queries;
 using Infrastructure.Repository.Abstractions.Repositories;
 using ManagedCode.Repository.AzureTable;
@@ -11,15 +12,18 @@ namespace Grains.Implementations
     {
         private readonly IPlanetRepository planetRepository;
         private readonly IPlanetQuery planetQuery;
-
+        private readonly IPlanetSpeciesClient planetSpeciesClient;
+        
         private Planet? planet;
 
         public PlanetGrain(
             IPlanetRepository planetRepository,
-            IPlanetQuery planetQuery)
+            IPlanetQuery planetQuery,
+            IPlanetSpeciesClient planetSpeciesClient)
         {
             this.planetRepository = planetRepository;
             this.planetQuery = planetQuery;
+            this.planetSpeciesClient = planetSpeciesClient;
         }
 
         public override async Task OnActivateAsync()
@@ -47,20 +51,15 @@ namespace Grains.Implementations
         }
 
         public Task<Planet> GetPlanet() =>
-            Task.FromResult(planet);
+            Task.FromResult(planet) ?? throw new Exception($"There no planet with id: {this.GetPrimaryKeyString()}");
 
-        public async Task AddSpeciesToPlanet(string planetId, Species species)
-        {
-            var streamProvider = GetStreamProvider("SpeciesProvider");
-            var planet = await planetQuery.GetPlanetById(planetId);
-            var stream = streamProvider.GetStream<PlanetSpecies>(Guid.NewGuid(), "CreatePlanetSpecies");
-            await stream.OnNextAsync(new PlanetSpecies
+        public async Task AddSpeciesToPlanet(string planetId, Species species) =>
+            await planetSpeciesClient.AddPlanetSpecies(new PlanetSpecies
             {
                 RowKey = planetId,
                 PlanetName = planet.Name,
                 SpeciesName = species.Name
             });
-        }
 
         public Task SayHello()
         {

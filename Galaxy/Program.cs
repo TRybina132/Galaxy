@@ -12,6 +12,8 @@ using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using System.Reflection;
+using Grains.Clients.Abstractions;
+using Grains.Clients.Implementations;
 
 try
 {
@@ -46,6 +48,7 @@ static async Task<IHost> StartSiloAsync(string[] args)
 
         siloBuilder.Configure<AzureTableOptions>
             (context.Configuration.GetSection("AzureTable"));
+        
         siloBuilder.Configure<JwtOptions>
             (context.Configuration.GetSection("JWTOptions"));
 
@@ -58,6 +61,8 @@ static async Task<IHost> StartSiloAsync(string[] args)
                     (context.Configuration.GetSection("AzureTable")["ConnectionString"]);
             });
 
+        siloBuilder.AddGrainService<PlanetSpeciesServiceGrain>();
+
         siloBuilder
             .AddSimpleMessageStreamProvider("SpeciesProvider")
             .AddMemoryGrainStorage("PubSubStore");
@@ -69,6 +74,7 @@ static async Task<IHost> StartSiloAsync(string[] args)
         {
             services.AddRepositories();
             services.AddScoped<IPasswordHasher<User>, BcryptPasswordHasher<User>>();
+            services.AddSingleton<IPlanetSpeciesClient, PlanetSpeciesClient>();
             services.AddHandlers();
         });
     });
