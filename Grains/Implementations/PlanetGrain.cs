@@ -12,12 +12,19 @@ namespace Grains.Implementations
         private readonly IPlanetRepository planetRepository;
         private readonly IPlanetQuery planetQuery;
 
+        private Planet? planet;
+
         public PlanetGrain(
             IPlanetRepository planetRepository,
             IPlanetQuery planetQuery)
         {
             this.planetRepository = planetRepository;
             this.planetQuery = planetQuery;
+        }
+
+        public override async Task OnActivateAsync()
+        {
+            planet = await planetQuery.GetPlanetById(this.GetPrimaryKeyString());
         }
 
         public async Task<List<Planet>> GetAllPlanets() =>
@@ -38,6 +45,9 @@ namespace Grains.Implementations
             planet.PartitionKey = "Planet";
             await planetRepository.UpdateAsync(planet);
         }
+
+        public Task<Planet> GetPlanet() =>
+            Task.FromResult(planet);
 
         public async Task AddSpeciesToPlanet(string planetId, Species species)
         {
