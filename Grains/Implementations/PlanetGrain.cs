@@ -4,6 +4,7 @@ using Grains.Clients.Abstractions;
 using Infrastructure.Repository.Abstractions.Queries;
 using Infrastructure.Repository.Abstractions.Repositories;
 using ManagedCode.Repository.AzureTable;
+using Microsoft.Extensions.Logging;
 using Orleans;
 
 namespace Grains.Implementations
@@ -28,7 +29,15 @@ namespace Grains.Implementations
 
         public override async Task OnActivateAsync()
         {
-            planet = await planetQuery.GetPlanetById(this.GetPrimaryKeyString());
+            // TODO: handle exception in all grains, those have entity
+            try
+            {
+                planet = await planetQuery.GetPlanetById(this.GetPrimaryKeyString());
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
         }
 
         public async Task<List<Planet>> GetAllPlanets() =>
