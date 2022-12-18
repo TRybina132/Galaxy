@@ -1,11 +1,10 @@
 ﻿using Domain.Entities;
 using Orleans;
+using Orleans.Services;
 
 namespace Grains.Abstractions
 {
-
-    // TODO: make IServiceGrain
-    public interface IPlanetSpeciesGrain : IGrainWithStringKey
+    public interface IPlanetSpeciesServiceGrain : IGrainService
     {
         Task AddPlanetSpecies(PlanetSpecies planetSpecies);
     }
