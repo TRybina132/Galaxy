@@ -7,8 +7,8 @@ namespace Grains.Abstractions
     {
         Task<List<Species>> GetAllSpecies();
         Task<Species> FindSpeciesByName(string name);
-        Task<Species> FindSpeciesById(string id);
         Task AddSpecies(Species species);
         Task IncrementPopulation(string speciesName);
+        Task<Species> GetSpecies();
     }
 }
