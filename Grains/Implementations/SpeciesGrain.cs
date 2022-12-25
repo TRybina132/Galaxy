@@ -11,10 +11,17 @@ namespace Grains.Implementations
         private readonly ISpeciesRepository speciesRepository;
         private readonly ISpeciesQuery speciesQuery;
 
+        private Species? species;
+        
         public SpeciesGrain(ISpeciesRepository speciesRepository, ISpeciesQuery speciesQuery)
         {
             this.speciesRepository = speciesRepository;
             this.speciesQuery = speciesQuery;
+        }
+
+        public override async Task OnActivateAsync()
+        {
+            species = await speciesQuery.GetById(this.GetPrimaryKeyString());
         }
 
         public async Task<List<Species>> GetAllSpecies() =>
@@ -29,12 +36,12 @@ namespace Grains.Implementations
 
         public async Task DeleteSpecies(string speciesId) =>
             await speciesRepository.DeleteAsync(speciesId);
-
-        public async Task<Species> FindSpeciesById(string id) =>
-            await speciesQuery.GetById(id) ?? throw new Exception($"Species with Id:{id} not found");
-
+        
         public async Task IncrementPopulation(string speciesName) =>
             await speciesRepository.IncrementPopulation(speciesName);
+
+        public Task<Species> GetSpecies() =>
+            Task.FromResult(species) ?? throw new Exception($"Species with Id:{this.GetPrimaryKeyString()} not found");
 
         public async Task<Species> FindSpeciesByName(string name)
         {

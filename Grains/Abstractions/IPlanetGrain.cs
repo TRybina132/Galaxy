@@ -11,5 +11,6 @@ namespace Grains.Abstractions
         Task InsertPlanet(Planet planet);
         Task DeletePlanet(string planetId);
         Task UpdatePlanet(Planet planet);
+        Task<Planet> GetPlanet();
     }
 }
