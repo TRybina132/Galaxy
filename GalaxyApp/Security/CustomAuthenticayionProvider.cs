@@ -17,7 +17,7 @@ namespace GalaxyApp.Security
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await storageHelper.GetTokenAsync();
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(token) && await storageHelper.IsAuthenticated())
             {
                 var jwtToken = new JwtSecurityToken(jwtEncodedString: token);
                 //var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(jwtToken.Claims));
