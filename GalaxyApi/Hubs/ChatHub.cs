@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace GalaxyApi.Hubs;
 
 //  💖 Here we using strongly typed hub. We can use real
-//      client methods instead methods` names  🌈
+//      client methods instead methods` names, hubs are transient  🌈
 public class ChatHub : Hub, IChatHub
 {
     public async Task SendMessage(string message)
